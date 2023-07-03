@@ -1,0 +1,190 @@
+<div class="row page-titles mx-0">
+  <div class="col p-md-0">
+    <ol class="breadcrumb" style="background-color: transparent; float: left;">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+      <li class="breadcrumb-item active"><a href="javascript:void(0)">Kho</a></li>
+    </ol>
+  </div>
+</div>
+<!-- row -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Quản lý Kho</h3>
+          <div class="table-responsive">
+
+            <!-- form search ----------------------------------------------->
+
+            <form [formGroup]="frmSearch" class="form-horizontal" (ngSubmit)="LoadData(this.pageSize)" >
+              
+              <div class="row">
+
+                <div class="form-group" style="display: flex;">
+                  <label class="col-lg-4 control-label" style="text-align: center;padding-top: 10px;">Tên sản phẩm:</label>
+                  <div class="col-lg-6 control-label">
+                    <input formControlName="txt_tensanpham" style="height: 10px;border-radius: 0.5rem;" type="text" class="form-control" >
+                  </div>
+                  <!-- <div class="col-lg-6">
+                    <input formControlName="txt_mota" style="height: 10px;width: 200px;" type="text" class="form-control" placeholder="mota">
+                  </div> -->
+                  
+                  <div class="col-lg-4 control-label">
+                    <button type="submit" class="btn btn-primary"><i class="icon-search4 position-right"></i> Tìm kiếm</button>
+                  </div>
+                </div> 
+                
+              </div>
+              
+            </form>
+
+            <div style="margin-bottom: 30px;">
+              <div class="heading-elements" >
+                <!-- <div class="heading-btn-group btn-primary" style="width:150px">
+                  <a (click)="themModal()" class="btn btn-link btn-float has-text"><i
+                      class="icon-plus22 text-primary"></i><span>Thêm</span></a>
+                </div>  -->
+                <button [routerLink]="'/sanpham'" style="float: left;" _ngcontent-fds-c8="" class="btn btn-primary pull-right mat-raised-button" mat-raised-button="" type="submit">
+                  <i class="fa fa-plus" style="margin-right: 5px;"></i>
+                  <span  class="mat-button-wrapper">Thêm sản phẩm</span>
+                  <div class="mat-button-ripple mat-ripple" matripple=""></div><div class="mat-button-focus-overlay"></div>
+                </button>
+              </div>
+            </div>
+            <!-- form search ----------------------------------------------->
+            <div style="margin-bottom: 30px;">
+              <div class="heading-elements" style="display: flex;justify-content: end;">
+               
+                  <select style="height: 36px;width: 38px;border-radius: 5px;" class="name" (ngModelChange)="LoadData($event)" [(ngModel)]="pageSize">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option> 
+                    <option value="20">20</option>
+                  </select>
+              </div>
+            </div>
+
+            <!-- Basic datatable -->
+            <div class="panel panel-flat" >
+              
+              
+
+              <table class="table table-hover table-bordered" >
+                <thead style=" background-color: #f2f2f9;">
+                  <tr>
+                    <th >Tên Sản Phẩm</th>
+                    <th >Tên Màu</th>
+                    <th >Màu</th>
+                    <th >Size</th>
+                    <th >Số lượng</th>
+                    
+                    <!-- <th>Trạng thái</th> -->
+                    <th class="text-center">Chức năng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let nsx of list_khos">
+                    <td>{{nsx.tenSanPham}}</td>
+                    <td>{{nsx.tenMau}}</td>
+                    <td><div style="height: 30px;width: 30px; border: 1px solid red;" [ngStyle]="{'background-color':nsx.maMau}"></div>
+                    <td>{{nsx.size}}</td>
+                    <td>{{nsx.soLuong}}</td>
+                    <!-- <td><span class="label" [class.label-success]="nsx.trangThai == 1" [class.label-danger]="nsx.trangThai== 0">{{ nsx.trangThai == 1 ? 'Active' : 'NoActive' }}</span></td> -->
+                    <!-- <td><div [innerHTML]="nsx.moTa"></div></td> -->
+                   
+                    <!-- <td><span class="label label-success">Active</span></td> -->
+
+                    <td class="text-center">
+                      <div class="icons-list" >
+                       
+                        <a disabled (click)="xoaDM(nsx.idDanhMuc)"><i class="icon-trash"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- enddatatable -->
+            <ngb-pagination (pageChange)="loadPage($event)" [(page)]="page" [pageSize]="pageSize" [collectionSize]="totalItem">
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- #/ container -->
+
+
+<!-- Large modal -->
+<!-- <div *ngIf="hienThiModal" class="modal fade" id="hienthiModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title">Danh Mục</h5>
+			</div>
+			<hr>
+			<form *ngIf="okForm" [formGroup]="frmDanhmuc" (ngSubmit)="OnSubmit(frmDanhmuc.value)"
+				class="form-horizontal">
+				<div class="modal-body" style="padding-left: 50px !important; padding-right:50px !important;">
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Tên Danh Mục<span style="color:red ;">*</span></label>
+						<div class="col-lg-9">
+							<input formControlName="txt_tendanhmuc" type="text" class="form-control" placeholder="Tên danh mục">
+							<div *ngIf="tendanhmuc.invalid && (tendanhmuc.dirty || tendanhmuc.touched)">
+								<div *ngIf="tendanhmuc.errors?.['required']" style="color:red ;">Tên không được rỗng</div>
+								<div *ngIf="tendanhmuc.errors?.['minlength']" style="color:red ;">
+									Tên không được nhỏ hơn 3 ký tự
+								</div>
+								<div *ngIf="tendanhmuc.errors?.['maxlength']" style="color:red ;">
+									Tên không được lớn hơn 250 ký tự
+								</div>
+							</div>
+						</div>
+					</div>
+          <div class="form-group" >
+						<label class="col-lg-9 control-label">Danh mục lớn (Nếu đã là danh mục lớn thì không nhập)<span style="color:red ;">*</span>:</label>
+
+							<div class="col-lg-9">
+								<select formControlName="txt_danhmuccha" [(ngModel)]="id_danhmuccha"  class="form-control" (change)="changeDanhMucLon($event)">
+									
+									
+									<option *ngFor="let dml of listDanhMucLon" [value]="dml.idDanhMuc">{{dml.tenDanhMuc}}</option>
+								</select>
+							</div>
+					</div>
+          <div class="form-group">
+						<label class="col-lg-3 control-label">Mô tả<span style="color:red ;">*</span>:</label>
+						<div class="col-lg-9">
+							<input formControlName="txt_mota" type="text" class="form-control">
+							
+						</div>
+					</div>
+					
+
+          <div class="form-group" >
+						<label class="col-lg-9 control-label">Trạng thái<span style="color:red ;">*</span>:</label>
+
+							<div class="col-lg-9">
+								<select formControlName="txt_trangthai"  [(ngModel)]="id_trangthai" class="form-control" (change)="changeTrangThai($event)">
+									<option [value]=1>Active</option>
+									<option [value]=0>No Active</option>
+								</select>
+							</div>
+					</div>
+					
+
+				</div>
+				<hr>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" (click)="dongModal()">Đóng</button>
+					<button type="submit" class="btn btn-primary" [disabled]="frmDanhmuc.invalid">Lưu lại</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div> -->
+<!-- /large modal -->

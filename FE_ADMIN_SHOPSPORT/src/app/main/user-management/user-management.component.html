@@ -1,0 +1,367 @@
+<div class="row page-titles mx-0">
+	<div class="col p-md-0">
+	  <ol class="breadcrumb" style="background-color: transparent; float: left;">
+		<li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+		<li class="breadcrumb-item active"><a href="javascript:void(0)">User</a></li>
+	  </ol>
+	</div>
+  </div>
+  <!-- row -->
+  
+  <div class="container-fluid">
+	<div class="row">
+	  <div class="col-12">
+		<div class="card">
+		  <div class="card-body">
+			<h3 class="card-title">Quản lý user</h3>
+			<div class="table-responsive">
+  
+			  <!-- form search ----------------------------------------------->
+  
+			  <form [formGroup]="frmSearch" class="form-horizontal" (ngSubmit)="LoadData($event)" >
+				
+				<div class="row">
+  
+				  <div class="form-group" style="display: flex;">
+					<label class="col-lg-4 control-label" style="text-align: center;padding-top: 10px;">Tên Username:</label>
+					<div class="col-lg-6 control-label">
+					  <input formControlName="txt_tendanhmuc" style="height: 10px;border-radius: 0.5rem;" type="text" class="form-control" >
+					</div>
+					<!-- <div class="col-lg-6">
+					  <input formControlName="txt_mota" style="height: 10px;width: 200px;" type="text" class="form-control" placeholder="mota">
+					</div> -->
+					
+					<div class="col-lg-4 control-label">
+					  <button type="submit" class="btn btn-primary"><i class="icon-search4 position-right"></i> Tìm kiếm</button>
+					</div>
+				  </div> 
+				  
+				</div>
+				
+			  </form>
+  
+			  <div style="margin-bottom: 30px;">
+				<div class="heading-elements" >
+				  <!-- <div class="heading-btn-group btn-primary" style="width:150px">
+					<a (click)="themModal()" class="btn btn-link btn-float has-text"><i
+						class="icon-plus22 text-primary"></i><span>Thêm</span></a>
+				  </div>  -->
+				  <button (click)="themModal()" style="float: left;" _ngcontent-fds-c8="" class="btn btn-primary pull-right mat-raised-button" mat-raised-button="" type="submit">
+					<i class="fa fa-plus" style="margin-right: 5px;"></i>
+					<span  class="mat-button-wrapper">Thêm user</span>
+					<div class="mat-button-ripple mat-ripple" matripple=""></div><div class="mat-button-focus-overlay"></div>
+				  </button>
+				</div>
+			  </div>
+			  <!-- form search ----------------------------------------------->
+  
+			  <!-- Basic datatable -->
+			  <div class="panel panel-flat" >
+				
+				
+			   
+  
+				
+  
+				<div style="height: 30px;">
+  
+				</div>
+				<select class="name" (ngModelChange)="LoadData($event)" [(ngModel)]="pageSize">
+				  <option value="3">3</option>
+				  
+				  <option value="4">4</option> 
+				  <option value="5">5</option>
+				  <option value="6">6</option>
+			  </select>
+				<table class="table table-hover table-bordered" >
+				  <thead style=" background-color: #f2f2f9;">
+					<tr>
+					  <th >UserName</th>
+					  <th >Email</th>
+					  <th >IdNguoiDung</th>
+					  <th >IdKhachHang</th>
+					  <th >Roles</th>
+					  <th >Trạng Thái</th>
+					  
+					  <!-- <th>Trạng thái</th> -->
+					  <th class="text-center">Chức năng</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<tr *ngFor="let nsx of list_users">
+					  <td>{{nsx.userName}}</td>
+					  <td>{{nsx.email}}</td>
+					  <td>{{nsx.idNguoiDung}}</td>
+					  <td>{{nsx.idKhachHang}}</td>
+					  <td ><ul>
+						  <li *ngFor="let role of nsx.roles">{{role}}</li>
+						</ul></td>
+						<td><span class="label" [class.label-success]="nsx.trangThai == 1" [class.label-danger]="nsx.trangThai== 0">{{ nsx.trangThai == 1 ? 'Hoạt Động' : 'Dừng Hoạt Động' }}</span></td>
+					  <!-- <td><span class="label" [class.label-success]="nsx.trangThai == 1" [class.label-danger]="nsx.trangThai== 0">{{ nsx.trangThai == 1 ? 'Active' : 'NoActive' }}</span></td> -->
+					  <!-- <td><div [innerHTML]="nsx.moTa"></div></td> -->
+					 
+					  <!-- <td><span class="label label-success">Active</span></td> -->
+					  <!-- <td>
+						{{nsx.tenKhacHang}}
+					  </td> -->
+  
+					  <td class="text-center">
+						<div class="icons-list" >
+						  <a (click)="suaModal(nsx.id)" ><i class="ti-write"></i></a>
+						  <a (click)="xoaModal(nsx.userName)"><i class="icon-trash"></i></a>
+						</div>
+					  </td>
+					</tr>
+				  </tbody>
+				</table>
+			  </div>
+			  <!-- enddatatable -->
+			  <ngb-pagination (pageChange)="loadPage($event)" [(page)]="page" [pageSize]="pageSize" [collectionSize]="tongsp">
+			  </ngb-pagination>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+  <!-- #/ container -->
+  
+  
+  <!-- Large modal -->
+  <div *ngIf="hienThiModal" class="modal fade" id="hienthiModal">
+	  <div class="modal-dialog modal-lg" style="max-width: 900px;">
+		  <div class="modal-content">
+			  <div class="modal-header">
+				  <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+				  <h5 class="modal-title">User</h5>
+			  </div>
+			  <hr>
+			  <form *ngIf="okForm" [formGroup]="frmUser" (ngSubmit)="OnSubmit(frmUser.value)"
+				  class="form-horizontal">
+				  <div class="modal-body" style="padding-left: 50px !important; padding-right:50px !important;">
+					<div class="row">
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">UserName<span style="color:red ;">*</span></label>
+							<div class="col-lg-12">
+								<input formControlName="txt_username" type="text" class="form-control" >
+								<div *ngIf="username.invalid && (username.dirty || username.touched)">
+									<div *ngIf="username.errors?.['required']" style="color:red ;">Username không được rỗng</div>
+									<div *ngIf="username.errors?.['minlength']" style="color:red ;">
+										Username không được nhỏ hơn 6 ký tự
+									</div>
+									<div *ngIf="username.errors?.['maxlength']" style="color:red ;">
+										Tên không được lớn hơn 15 ký tự
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Password<span style="color:red ;">*</span></label>
+							<div class="col-lg-12">
+								<input formControlName="txt_password" type="text" class="form-control" >
+								<div *ngIf="password.invalid && (password.dirty || password.touched)">
+									<div *ngIf="password.errors?.['required']" style="color:red ;">Password không được rỗng</div>
+									<div *ngIf="password.errors?.['minlength']" style="color:red ;">
+										Password không được nhỏ hơn 6 ký tự
+									</div>
+									<div *ngIf="password.errors?.['maxlength']" style="color:red ;">
+										Password không được lớn hơn 15 ký tự
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					
+					<div class="row">
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Email<span style="color:red ;">*</span></label>
+							<div class="col-lg-12">
+								<input formControlName="txt_email" type="text" class="form-control" >
+								<div *ngIf="email.invalid && (email.dirty || email.touched)">
+									<div *ngIf="email.errors?.['required']" style="color:red ;">Password không được rỗng</div>
+									<div *ngIf="email.errors?.['pattern']" style="color:red ;">Email không đúng định dạng</div>
+								</div>
+								
+							</div>
+						</div>
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Người dùng<span style="color:red ;">*</span></label>
+							<div class="col-lg-12">
+								<select formControlName="txt_idnguoidung" [(ngModel)]="id_NguoiDung" class="form-control" (change)="changeNguoiDung($event)">
+									<!-- <option disabled>Select Website</option> -->
+									<option >Chọn Người Dùng</option>
+									<option *ngFor="let th of listNguoiDung" [value]="th.idNguoiDung">{{th.hoTen}}</option>
+								</select>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row">
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Role<span style="color:red ;">*</span></label>
+							<div class="col-lg-12">
+								<div *ngFor="let role of listRole; let i = index">
+									<label>
+									  <input formControlName="txt_role" type="checkbox" (change)="onChange($event, role.name)"> {{ role.name }}
+									</label>
+								  </div>
+								
+							</div>
+						</div>
+					</div>
+
+					
+	  
+  
+				  </div>
+				  <hr>
+				  <div class="modal-footer">
+					  <button type="button" class="btn btn-link" (click)="dongModal()">Đóng</button>
+					  <button type="submit" class="btn btn-primary" >Lưu lại</button>
+				  </div>
+			  </form>
+		  </div>
+	  </div>
+  </div>
+  <!-- /large modal -->
+
+
+  <!-- Sửa modal -->
+  <div *ngIf="hienthiModalSua" class="modal fade" id="hienthiModalSua" data-backdrop="static">
+	<div class="modal-dialog modal-lg" style="max-width: 900px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+				<h5 class="modal-title">User</h5>
+			</div>
+			<hr>
+			<form *ngIf="okForm" [formGroup]="frmUserUpdate" (ngSubmit)="OnSubmitUpdate(frmUserUpdate.value)"
+				class="form-horizontal">
+				<div class="modal-body" style="padding-left: 50px !important; padding-right:50px !important;">
+				  <div class="row">
+
+					<div class="form-group col-md-6">
+						<label class="col-lg-12 control-label">UserName<span style="color:red ;">*</span></label>
+						<div class="col-lg-12">
+							<input readonly formControlName="txt_us" type="text" class="form-control" >
+							<div *ngIf="us.invalid && (us.dirty || us.touched)">
+								<div *ngIf="us.errors?.['required']" style="color:red ;">usail không được rỗng</div>
+								<div *ngIf="us.errors?.['pattern']" style="color:red ;">usail không đúng định dạng</div>
+							</div>
+							
+						</div>
+					</div>
+
+
+					  <div class="form-group col-md-6">
+						<label class="col-lg-12 control-label">Email<span style="color:red ;">*</span></label>
+						<div class="col-lg-12">
+							<input readonly formControlName="txt_em" type="text" class="form-control" >
+							<div *ngIf="em.invalid && (em.dirty || em.touched)">
+								<div *ngIf="em.errors?.['required']" style="color:red ;">Email không được rỗng</div>
+								<div *ngIf="em.errors?.['pattern']" style="color:red ;">Email không đúng định dạng</div>
+							</div>
+							
+						</div>
+					</div>
+
+					  <!-- <div class="form-group col-md-6">
+						  <label class="col-lg-12 control-label">Password<span style="color:red ;">*</span></label>
+						  <div class="col-lg-12">
+							  <input formControlName="txt_password" type="text" class="form-control" >
+							  <div *ngIf="username.invalid && (username.dirty || username.touched)">
+								  <div *ngIf="username.errors?.['required']" style="color:red ;">Password không được rỗng</div>
+								  <div *ngIf="username.errors?.['minlength']" style="color:red ;">
+									  Password không được nhỏ hơn 6 ký tự
+								  </div>
+								  <div *ngIf="username.errors?.['maxlength']" style="color:red ;">
+									  Password không được lớn hơn 15 ký tự
+								  </div>
+							  </div>
+						  </div>
+					  </div> -->
+
+				  </div>
+				  
+				  <div class="row">
+
+					  
+					  <div class="form-group col-md-6">
+						  <label class="col-lg-12 control-label">Người dùng<span style="color:red ;">*</span></label>
+						  <div class="col-lg-12">
+							  <select readonly formControlName="txt_idnd" [(ngModel)]="idNguoiDung"  class="form-control" (change)="changeNguoiDung($event)">
+								  <!-- <option disabled>Select Website</option> -->
+								  <option >Chọn Người Dùng</option>
+								  <option *ngFor="let th of listNguoiDung" [value]="th.idNguoiDung">{{th.hoTen}}</option>
+							  </select>
+						  </div>
+					  </div>
+
+					  <div class="form-group col-md-6">
+						<label class="col-lg-12 control-label">Khách hàng<span style="color:red ;">*</span></label>
+						<div class="col-lg-12">
+							<input formControlName="txt_tenkhachhang" [(ngModel)]="tenkhachhang" type="text" class="form-control" readonly>
+							<!-- <select formControlName="txt_idkh" [(ngModel)]="idKhachHang"  class="form-control" (change)="changeKhachHang($event)">
+								
+								<option >Chọn Người Dùng</option>
+								<option *ngFor="let th of listNguoiDung" [value]="th.idNguoiDung">{{th.hoTen}}</option>
+							</select> -->
+						</div>
+					</div>
+
+
+					  
+
+				  </div>
+
+				  <div class="row">
+
+
+					<div class="form-group col-md-6">
+						<label class="col-lg-12 control-label">Trạng Thái<span style="color:red ;">*</span></label>
+						<div class="col-lg-12">
+							
+							<select formControlName="txt_trangthai"  [(ngModel)]="id_trangthai" class="form-control" (change)="changeTrangThai($event)">
+								<option [value]=1>Hoạt động</option>
+								<option [value]=0>Dừng hoạt động</option>
+							</select>
+						</div>
+					</div>
+
+
+
+					<div class="form-group col-md-6">
+						<label class="col-lg-12 control-label">Role<span style="color:red ;">*</span></label>
+						<div class="col-lg-12">
+							<div *ngFor="let role of listRole; let i = index">
+								<label>
+								  <input type="checkbox" (change)="onChange($event, role.name)" [checked]="user.roles.includes(role.name)"> {{ role.name }}
+								</label>
+							  </div>
+							
+						</div>
+					</div>
+				  </div>
+
+				
+
+
+				</div>
+				<hr>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" (click)="dongModal()">Đóng</button>
+					<button type="submit" class="btn btn-primary" >Lưu lại</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!--  Sửa modal  -->

@@ -1,0 +1,546 @@
+<div class="row page-titles mx-0">
+	<div class="col p-md-0">
+		<ol class="breadcrumb" style="float:left">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+			<li class="breadcrumb-item active"><a [routerLink]="['/sanpham']">Sản phẩm</a></li>
+		</ol>
+	</div>
+</div>
+<!-- row -->
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<h3 class="card-title">Quản lý sản phẩm</h3>
+					<div class="table-responsive">
+
+
+						<!-- form search ----------------------------------------------->
+
+						<!-- <form [formGroup]="frmSearch" class="form-horizontal" (ngSubmit)="LoadData()" >
+              
+							<div class="form-group" style="display: flex;">
+							  <label class="col-lg-2 control-label" style="text-align: center;padding-top: 10px;">Tên SP:</label>
+							  <div class="col-lg-6">
+								<input formControlName="txt_tensanpham" style="height: 10px;width: 200px;" type="text" class="form-control" placeholder="Tên SP">
+							  </div>
+							  <div class="col-lg-6">
+								<input formControlName="txt_giasanpham" style="height: 10px;width: 200px;" type="text" class="form-control" placeholder="gia">
+							  </div>
+							  
+							</div> 
+							<div class="col-lg-4 text-right">
+							  <button type="submit" class="btn btn-primary"><i class="icon-search4 position-right"></i> Tìm kiếm</button>
+							</div>
+						  </form> -->
+			  
+						  
+						  <!-- form search ----------------------------------------------->
+						  <form [formGroup]="frmSearch" class="form-horizontal" (ngSubmit)="LoadData(this.pageSize)" >
+              
+							<div class="row" style="justify-content: space-between;">
+			  
+							  <div class="form-group" style="display: flex;">
+								<label class="col-lg-4 control-label" style="text-align: center;padding-top: 10px;">Tên sản phẩm:</label>
+								<div class="col-lg-6 control-label">
+								  <input formControlName="txt_tensanpham" style="height: 10px;border-radius: 0.5rem;" type="text" class="form-control" >
+								</div>
+								
+								
+								<div class="col-lg-4 control-label">
+								  <button type="submit" class="btn btn-primary"><i class="icon-search4 position-right"></i> Tìm kiếm</button>
+								</div>
+							  </div> 
+
+							  <select class="name" style="height: 37px;
+							  					margin-right: 75px;" [(ngModel)]="id_danhmucsearch" (change)="changeDanhMucSearch($event)" [ngModelOptions]="{standalone: true}">
+								<option value=0>-- Chọn danh mục --</option>
+								
+								<option *ngFor="let dmc of listdanhmucon" value="{{dmc.idDanhMuc}}">{{dmc.tenDanhMuc}}</option>
+							  </select>
+							  <!-- <select class="name" style="height: 37px;
+							  margin-right: 75px;" [(ngModel)]="id_danhmucsearch"  class="form-control" (change)="changeDanhMucSearch($event)">
+								
+								<option >Chọn Danh Mục</option>
+								<option *ngFor="let th of listdanhmucon" [value]="th.idDanhMuc">{{th.tenDanhMuc}}</option>
+							</select> -->
+							  
+							</div>
+						</form>
+							<div style="margin-bottom: 30px;">
+								<div class="heading-elements" style="display: flex;justify-content: space-between;">
+								  <!-- <div class="heading-btn-group btn-primary" style="width:150px">
+									<a (click)="themModal()" class="btn btn-link btn-float has-text"><i
+										class="icon-plus22 text-primary"></i><span>Thêm</span></a>
+								  </div>  -->
+								  <button (click)="modalThemSanPham()" style="float: left;" _ngcontent-fds-c8="" class="btn btn-primary pull-right mat-raised-button" mat-raised-button="" type="submit">
+									<i class="fa fa-plus" style="margin-right: 5px;"></i>
+									<span  class="mat-button-wrapper">Thêm sản phẩm</span>
+									<div class="mat-button-ripple mat-ripple" matripple=""></div><div class="mat-button-focus-overlay"></div>
+								  </button>
+
+								  <select style="border-radius: 5px;" class="name" (ngModelChange)="LoadData($event)" [(ngModel)]="pageSize">
+									<option value="5">5</option>
+									<option value="10">10</option>
+									<option value="15">15</option> 
+									<option value="20">20</option>
+								</select>
+								 
+								</div>
+							  </div>
+							
+						  
+
+						<!-- Basic datatable -->
+						<div class="panel panel-flat">
+		
+						
+							
+							
+							<table class="table table-hover table-bordered">
+								<thead style=" background-color: #f2f2f9;">
+									<!-- <tr>
+										<th>Nhập sản phẩm</th>
+									</tr> -->
+									<tr>
+										<th>Trạng thái</th>
+										<th (click)="sortBy('tenSanPham')" >Tên Sản Phẩm {{sortIcon('tenSanPham')}}</th>
+										<!-- <th style="text-align: center;height: 80px;width: 500px;">Mô tả</th> -->
+										<th (click)="sortBy('gia')">Giá {{sortIcon('gia')}}</th>
+										<th>Ảnh</th>
+
+										
+
+										<!-- <th>Trạng thái</th> -->
+										<th class="text-center" >Chức năng</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let sp of list_sanphams ">
+										<td *ngIf="sp.trangThai==0"><a style="color: red;" [routerLink]="['/nhapsanpham',sp.idSanPham]">Chưa nhập </a></td>
+										<td *ngIf="sp.trangThai==1"><a style="color: rgb(0, 133, 29);" [routerLink]="['/nhapsanpham',sp.idSanPham]">Nhập thêm </a></td>
+										<td>{{sp.tenSanPham}}</td>
+										<!-- <td><div [innerHTML]="sp.moTaSanPham"></div></td> -->
+										<td *ngIf="sp && sp.minGiaSP && sp.minGiaSP==sp.maxGiaSP">{{sp.minGiaSP.toLocaleString()}} VNĐ</td>
+										<td *ngIf="sp && sp.minGiaSP &&sp.minGiaSP!=sp.maxGiaSP">{{sp.minGiaSP.toLocaleString()}} - {{sp.maxGiaSP.toLocaleString()}} VNĐ</td>
+										<td *ngIf="sp && sp.minGiaSP==null ||sp.minGiaSP==null">Chưa nhập</td>
+										<td><img style="height: 70px;width: 70px;" src="{{sp.anhSanPham}}"></td>
+
+										<!-- <td><span class="label label-success">Active</span></td> -->
+										<td class="text-center">
+											<ul class="icons-list">
+												<li><a (click)="suaModal(sp.idSanPham)"><i class="icon-fixed-width icon-pencil"></i></a></li>
+												<li><a (click)="xoaSanPham(sp.idSanPham)"><i class="icon-fixed-width icon-trash"></i></a>
+												</li>
+											</ul>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							
+						</div>
+						<ngb-pagination (pageChange)="loadPage($event)" [(page)]="page" [pageSize]="pageSize" [collectionSize]="totalItem">
+						</ngb-pagination>
+						<!-- enddatatable -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- #/ container -->
+
+
+<!-- Large modal -->
+<div *ngIf="hienThiModal" class="modal fade" id="hienthiModal">
+	<div class="modal-dialog modal-lg" style="max-width: 1000px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title">Sản phẩm</h5>
+			</div>
+			<hr>
+			<form *ngIf="okForm" [formGroup]="frmSanPham" (ngSubmit)="OnSubmit(frmSanPham.value)"
+				class="form-horizontal">
+				<div class="modal-body" style="padding-left: 50px !important; padding-right:50px !important;">
+
+
+					<div class="row">
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Tên sản phẩm<span style="color:red ;">*</span></label>
+							<div class="col-lg-12">
+								<input formControlName="txt_tensanpham" type="text" class="form-control"
+									placeholder="Tên sản phẩm">
+								<div *ngIf="tensanpham.invalid && (tensanpham.dirty || tensanpham.touched)">
+									<div *ngIf="tensanpham.errors?.['required']" style="color:red ;">Không được
+										để trống
+									</div>
+									<div *ngIf="tensanpham.errors?.['minlength']" style="color:red ;">
+										Tên sản phẩm không được nhỏ hơn 3 ký tự
+									</div>
+									<div *ngIf="tensanpham.errors?.['maxlength']" style="color:red ;">
+										Tên sản phẩm không được lớn hơn 250 ký tự
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Thương hiệu<span style="color:red ;">*</span>:</label>
+							<div class="col-lg-12">
+								<select formControlName="txt_idthuonghieu" [(ngModel)]="id_thuonghieu"  class="form-control" (change)="changeThuongHieu($event)">
+									<!-- <option disabled>Select Website</option> -->
+									<option >Chọn Thương Hiệu</option>
+									<option *ngFor="let th of listThuongHieu" [value]="th.idThuongHieu">{{th.tenThuongHieu}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+					
+
+					<div class="row">
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Danh mục lớn<span style="color:red ;">*</span>:</label>
+
+							<div class="col-lg-12" *ngIf="!id_danhmuccha">
+								<select formControlName="txt_iddanhmuccha" [(ngModel)]="id_danhmuc" class="form-control" (change)="changeDanhMucLon($event)">
+									
+									<option >Chọn Danh Mục Lớn</option>
+									<option *ngFor="let dml of listDanhMucLon" [value]="dml.idDanhMuc">{{dml.tenDanhMuc}}</option>
+								</select>
+							</div>
+							<div class="col-lg-12" *ngIf="id_danhmuccha">
+								<select formControlName="txt_iddanhmuccha" [(ngModel)]="id_danhmuccha" class="form-control" (change)="changeDanhMucLon($event)">
+									
+									<option >Chọn Danh Mục Lớn</option>
+									<option *ngFor="let dml of listDanhMucLon" [value]="dml.idDanhMuc">{{dml.tenDanhMuc}}</option>
+								</select>
+							</div>
+							
+
+						</div>
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Danh mục nhỏ<span style="color:red ;">*</span>:</label>
+
+							<div class="col-lg-12">
+								<select formControlName="txt_iddanhmuccon" [(ngModel)]="id_danhmuc" class="form-control" (change)="changeDanhMucNho($event)">
+									<!-- <option disabled>Select Website</option> -->
+									<option >Chọn Danh Mục Nhỏ</option>
+									<option *ngFor="let dml of listDanhMucNho" [value]="dml.idDanhMuc">{{dml.tenDanhMuc}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Xuất xứ<span style="color:red ;">*</span></label>
+							<div class="col-lg-12">
+								<input formControlName="txt_xuatxu" type="text" class="form-control"
+									placeholder="Xuất xứ">
+								<div *ngIf="xuatxu.invalid && (xuatxu.dirty || xuatxu.touched)">
+									<div *ngIf="xuatxu.errors?.['required']" style="color:red ;">Không được
+										để trống
+									</div>									
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Chất liệu<span style="color:red ;">*</span>:</label>
+							<div class="col-lg-12">
+								<input formControlName="txt_chatlieu" type="text" class="form-control"
+									placeholder="Chất liệu">
+								<div *ngIf="chatlieu.invalid && (chatlieu.dirty || chatlieu.touched)">
+									<div *ngIf="chatlieu.errors?.['required']" style="color:red ;">Không được
+										để trống
+									</div> 	
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Mô tả<span style="color:red ;">*</span>:</label>
+						<div class="col-lg-12">
+							<!-- <input formControlName="txt_motasanpham" type="text" class="form-control"
+								placeholder="Mô tả sản phẩm"> -->
+								<ckeditor formControlName="txt_motasanpham" ></ckeditor>
+							<div *ngIf="motasanpham.invalid && (motasanpham.dirty || motasanpham.touched)">
+								<div *ngIf="motasanpham.errors?.['required']" style="color:red ;">Không được
+									để trống
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Ảnh Sản phẩm:</label>
+						<div class="col-lg-9">
+							<div class="media no-margin-top">
+								<div class="media-left">
+									<img class="mr-3" src="{{anhSPMau}}" width="150" height="150" alt="">
+									
+									<!-- <img
+										[src]="sanpham?.anhSanPham?sanpham.anhSanPham:'assets/images/imgs/imageprocessing.png'"
+										style="width: 100px; height: 100px;" class="img-rounded" alt=""> -->
+								</div>
+
+								<div class="media-body">
+
+									<input formControlName="txt_anhsanpham" style="display: none;" id="avatar-input" title="Chọn ảnh" (change)="upload($event)"
+										accept=".jpg,.png,.jpeg,.gif,.bmp,.tif,.tiff" type="file" class="file-styled">
+									<label for="avatar-input" class="btn btn-danger px-5">Đổi ảnh</label>
+
+
+									<!-- <input  formControlName="txt_anh" (change)="upload($event)" accept=".jpg,.png,.jpeg,.gif,.bmp,.tif,.tiff"
+										type="file" class="file-styled">
+									<span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span> -->
+								</div>
+							</div>
+						</div>
+					</div> 
+					
+
+					<!-- <div class="form-group">
+						<label class="col-lg-3 control-label">Ảnh Sản phẩm:</label>
+						<div class="col-lg-9">
+							<div class="media no-margin-top">
+							
+								<div class="media-left" >
+									
+									<img
+											[src]="sanpham?.anhSanPham"
+											
+											style="width: 100px; height: 100px;" class="img-rounded" alt="">
+								</div>
+
+								<div class="media-body">
+									<input  formControlName="txt_anhsanpham" (change)="upload($event)" accept=".jpg,.png,.jpeg,.gif,.bmp,.tif,.tiff"
+										type="file" class="file-styled">
+									<span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
+								</div>
+							</div>
+						</div>
+					</div> -->
+				
+					
+					
+				</div>
+				<hr>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" (click)="dongModal()">Đóng</button>
+					<button type="submit" class="btn btn-primary" [disabled]="frmSanPham.invalid">Lưu lại</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- /large modal -->
+
+
+
+<!-- Modal thêm sản phẩm-->
+
+<!-- Large modal -->
+<div *ngIf="hienThiModalThemSanPham" class="modal fade" id="hienthiModalThemSanPham">
+	<div class="modal-dialog modal-lg" style="max-width: 1000px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title">Thêm Sản phẩm</h5>
+			</div>
+			<hr>
+			<form *ngIf="okForm" [formGroup]="frmThemSanPham" (ngSubmit)="ThemSanPham(frmThemSanPham.value)"
+				class="form-horizontal">
+				<div class="modal-body" style="padding-left: 50px !important; padding-right:50px !important;">
+
+
+					<div class="row">
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Tên sản phẩm<span style="color:red ;">*</span></label>
+							<div class="col-lg-12">
+								<input formControlName="txt_ten" type="text" class="form-control"
+									placeholder="Tên sản phẩm">
+								<div *ngIf="ten.invalid && (ten.dirty || ten.touched)">
+									<div *ngIf="ten.errors?.['required']" style="color:red ;">Không được
+										để trống
+									</div>
+									<div *ngIf="ten.errors?.['minlength']" style="color:red ;">
+										Tên sản phẩm không được nhỏ hơn 3 ký tự
+									</div>
+									<div *ngIf="ten.errors?.['maxlength']" style="color:red ;">
+										Tên sản phẩm không được lớn hơn 250 ký tự
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Thương hiệu<span style="color:red ;">*</span>:</label>
+							<div class="col-lg-12">
+								<select formControlName="txt_idth" class="form-control" (change)="changeThuongHieu($event)">
+									<!-- <option disabled>Select Website</option> -->
+									<option >Chọn Thương Hiệu</option>
+									<option *ngFor="let th of listThuongHieu" [value]="th.idThuongHieu">{{th.tenThuongHieu}}</option>
+								</select>
+							</div>
+						</div>
+						
+					</div>
+
+					
+
+					<div class="row">
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Danh mục lớn<span style="color:red ;">*</span>:</label>
+
+							<div class="col-lg-12" >
+								<select formControlName="txt_iddm" class="form-control" (change)="changeDanhMucLon($event)" >
+									
+									<option >Chọn Danh Mục Lớn</option>
+									<option *ngFor="let dsdml of dsdanhmuclon" [value]="dsdml.idDanhMuc">{{dsdml.tenDanhMuc}}</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Danh mục nhỏ<span style="color:red ;">*</span>:</label>
+
+							<div class="col-lg-12" >
+								<select formControlName="txt_iddm" class="form-control" (change)="changeDanhMucNho($event)" >
+									
+									<option >Chọn Danh Mục Lớn</option>
+									<option *ngFor="let dmn of listDanhMucNho" [value]="dmn.idDanhMuc">{{dmn.tenDanhMuc}}</option>
+								</select>
+							</div>
+						</div>
+						
+					</div>
+
+
+					<div class="row">
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Xuất xứ<span style="color:red ;">*</span></label>
+							<div class="col-lg-12">
+								<input formControlName="txt_xx" type="text" class="form-control"
+									placeholder="Xuất xứ">
+								<div *ngIf="xx.invalid && (xx.dirty || xx.touched)">
+									<div *ngIf="xx.errors?.['required']" style="color:red ;">Không được
+										để trống
+									</div>	
+									<div *ngIf="xx.errors?.['minlength']" style="color:red ;">
+										Xuất xứ không được nhỏ hơn 3 ký tự
+									</div>
+									<div *ngIf="xx.errors?.['maxlength']" style="color:red ;">
+										Xuất xứ không được lớn hơn 50 ký tự
+									</div>							
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group col-md-6">
+							<label class="col-lg-12 control-label">Chất liệu<span style="color:red ;">*</span>:</label>
+							<div class="col-lg-12">
+								<input formControlName="txt_cl" type="text" class="form-control"
+									placeholder="Chất liệu">
+								<div *ngIf="cl.invalid && (cl.dirty || cl.touched)">
+									<div *ngIf="cl.errors?.['required']" style="color:red ;">Không được
+										để trống
+									</div> 
+									<div *ngIf="cl.errors?.['minlength']" style="color:red ;">
+										Chất liệu không được nhỏ hơn 3 ký tự
+									</div>
+									<div *ngIf="cl.errors?.['maxlength']" style="color:red ;">
+										Chất liệu không được lớn hơn 50 ký tự
+									</div>	
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Mô tả<span style="color:red ;">*</span>:</label>
+						<div class="col-lg-12">
+							
+								<ckeditor formControlName="txt_mota" ></ckeditor>
+							<div *ngIf="mota.invalid && (mota.dirty || mota.touched)">
+								<div *ngIf="mota.errors?.['required']" style="color:red ;">Không được
+									để trống
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="form-group">
+						<label class="col-lg-3 control-label">Mô tả<span style="color:red ;">*</span>:</label>
+						<div class="col-lg-12">
+							<input formControlName="txt_mota" type="text" class="form-control"
+								placeholder="Mô tả sản phẩm">
+							
+						</div>
+					</div> -->
+
+					
+
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Ảnh Sản phẩm:</label>
+						<div class="col-lg-9">
+							<div class="media no-margin-top">
+								<div class="media-left">
+									<img class="mr-3" src="{{anhSPMau}}" width="150" height="150" alt="">
+									
+									<!-- <img
+										[src]="sanpham?.anhSanPham?sanpham.anhSanPham:'assets/images/imgs/imageprocessing.png'"
+										style="width: 100px; height: 100px;" class="img-rounded" alt=""> -->
+								</div>
+
+								<div class="media-body">
+
+									<input formControlName="txt_anhsanpham" style="display: none;" id="avatar-input" title="Chọn ảnh" (change)="upload($event)"
+										accept=".jpg,.png,.jpeg,.gif,.bmp,.tif,.tiff" type="file" class="file-styled">
+									<label for="avatar-input" class="btn btn-danger px-5">Thêm ảnh</label>
+
+
+									<!-- <input  formControlName="txt_anh" (change)="upload($event)" accept=".jpg,.png,.jpeg,.gif,.bmp,.tif,.tiff"
+										type="file" class="file-styled">
+									<span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span> -->
+								</div>
+							</div>
+						</div>
+					</div> 
+					
+				</div>
+				<hr>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" (click)="dongModal()">Đóng</button>
+					<button type="submit" class="btn btn-primary" >Lưu lại</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- /large modal -->
+

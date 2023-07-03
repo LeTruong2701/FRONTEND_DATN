@@ -1,0 +1,330 @@
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-lg-3 col-sm-6">
+            <div class="card gradient-1">
+                <div class="card-body">
+                    <h3 class="card-title text-white">Số đơn trong tháng</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">{{sodon}}</h2>
+                        <!-- <p class="text-white mb-0">Tháng 1 - 2023</p> -->
+                    </div>
+                    <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card gradient-2">
+                <div class="card-body">
+                    <h3 class="card-title text-white">Doanh thu(tháng)</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">{{loinhuan|number}}</h2>
+                        <!-- <p class="text-white mb-0">Tháng 1 - 2023</p> -->
+                    </div>
+                    <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card gradient-3">
+                <div class="card-body">
+                    <h3 class="card-title text-white">Khách hàng mới</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">3</h2>
+                        <!-- <p class="text-white mb-0">Tháng 1 - 2023</p> -->
+                    </div>
+                    <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card gradient-4">
+                <div class="card-body">
+                    <h3 class="card-title text-white">Khách hàng thân thiết</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">99%</h2>
+                        <!-- <p class="text-white mb-0">Tháng 1 - 2023</p> -->
+                    </div>
+                    <span class="float-right display-5 opacity-5"><i class="fa fa-heart"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <!-- <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body pb-0 d-flex justify-content-between">
+                            <div>
+                                <h4 class="mb-1">Sản phẩm giảm giá</h4>
+                                <p>Tổng thu nhập trong tháng</p>
+                                <h3 class="m-0">$ 8.650</h3>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li class="d-inline-block mr-3"><a class="text-dark" href="#">Ngày</a></li>
+                                    <li class="d-inline-block mr-3"><a class="text-dark" href="#">Tuần</a></li>
+                                    <li class="d-inline-block"><a class="text-dark" href="#">Tháng</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chart_widget_2"></canvas>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div class="w-100 mr-2">
+                                    <h6>Pixel 2</h6>
+                                    <div class="progress" style="height: 6px">
+                                        <div class="progress-bar bg-danger" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                                <div class="ml-2 w-100">
+                                    <h6>iPhone X</h6>
+                                    <div class="progress" style="height: 6px">
+                                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+  
+    <div class="row">
+      <div class="col-lg-8">
+          <div class="card">
+              <div class="card-body">
+                  <div class="flex-item">
+                      <div style="display: block;">
+                      <canvas baseChart width="400" height="300"
+                                  [data]="lineChartData"
+                                  [options]="lineChartOptions"
+                                  [type]="lineChartType"
+                                  (chartHover)="chartHovered($event)"
+                                  (chartClick)="chartClicked($event)"></canvas>
+                      </div>
+                    </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-lg-4">
+          <div class="card">
+              <div class="card-body" style="text-align: center; height: 548px;">
+                <h4>Bảng thống kê 15 ngày gần nhất(VNĐ)</h4>
+                  <div class="flex-item">
+                      <table class="table table-condensed" >
+                        <thead style=" background-color: #f2f2f9;">
+                            <tr>
+                              <th >Ngày</th>
+                              <th >Doanh Thu</th>
+                              <th >Lợi nhuận</th>
+                              
+                        
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let nsx of tableData">
+                              <td>{{nsx.date| date:'dd/MM/yyyy'}}</td>
+                              <td>{{nsx.doanhThu.toLocaleString()}}</td>
+                              <td>{{nsx.loiNhuan.toLocaleString()}}</td>
+                             
+          
+                              
+                            </tr>
+                          </tbody>
+                       
+                      </table>
+                      <div class="button-row">
+                          <button (click)="loadRevenues()">Tải lại số liệu</button>
+                       
+                      </div>
+                    </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="flex-item">
+                    <div style="display: block;width: 300px; height: 300px;">
+                        <canvas baseChart #chartPie="base-chart" 
+                                [data]="pieChartData"
+                                [type]="pieChartType"
+                                [options]="pieChartOptions"
+                                
+                                >
+                        </canvas>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body" style="text-align: center;">
+              <h4>Bảng trạng thái hóa đơn trong tháng</h4>
+                <div class="flex-item">
+                    <table class="table table-condensed" >
+                      <thead style=" background-color: #f2f2f9;">
+                          <tr>
+                            <th >Thành công</th>
+                            <th >Đang giao</th>
+                            <th >Đã hủy</th>
+                            
+                      
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngIf="sodondathongke">
+                            <td>{{sodondathongke[0]}}</td>
+                            <td>{{sodondathongke[1]}}</td>
+                            <td>{{sodondathongke[2]}}</td>
+                          </tr>
+                          <tr *ngIf="sodondathongke==null">
+                            Hãy load dữ liệu
+                          </tr>
+                        </tbody>
+                     
+                    </table>
+                    <div class="button-row">
+                        <button (click)="loadSoDon()">Tải lại số liệu</button>
+                     
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+    
+  </div>
+
+  <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body" style="text-align: center;">
+                    <h4>Sản phẩm đã bán trong tháng</h4>
+                    <table class="table table-condensed" >
+                        <thead style=" background-color: #f2f2f9;">
+                            <tr>
+                              <th >Tên sản phẩm</th>
+                              <th >Hình ảnh</th>
+                              <th >Số lượng bán</th>
+                              
+                        
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let i of danhsachspbantrongthang">
+                              <td>{{i.tenSanPham}}</td>
+                              <td><img style="height: 70px;width: 70px;" src="http://localhost:2701/{{i.anhSanPham}}"></td>
+                              <td>{{i.soLuongBan}}</td>
+                            </tr>
+                            
+                          </tbody>
+                       
+                      </table>
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+  
+  
+  
+    
+  
+    <!-- <div class="row">
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="social-graph-wrapper widget-facebook">
+                        <span class="s-icon"><i class="fa fa-facebook"></i></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 border-right">
+                            <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                <h4 class="m-1">89k</h4>
+                                <p class="m-0">Friends</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                <h4 class="m-1">119k</h4>
+                                <p class="m-0">Followers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="social-graph-wrapper widget-linkedin">
+                        <span class="s-icon"><i class="fa fa-linkedin"></i></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 border-right">
+                            <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                <h4 class="m-1">89k</h4>
+                                <p class="m-0">Friends</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                <h4 class="m-1">119k</h4>
+                                <p class="m-0">Followers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="social-graph-wrapper widget-googleplus">
+                        <span class="s-icon"><i class="fa fa-google-plus"></i></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 border-right">
+                            <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                <h4 class="m-1">89k</h4>
+                                <p class="m-0">Friends</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                <h4 class="m-1">119k</h4>
+                                <p class="m-0">Followers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="social-graph-wrapper widget-twitter">
+                        <span class="s-icon"><i class="fa fa-twitter"></i></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 border-right">
+                            <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                <h4 class="m-1">89k</h4>
+                                <p class="m-0">Friends</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                                <h4 class="m-1">119k</h4>
+                                <p class="m-0">Followers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+  </div>

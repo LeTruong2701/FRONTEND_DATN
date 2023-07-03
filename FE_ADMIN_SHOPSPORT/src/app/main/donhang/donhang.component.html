@@ -1,0 +1,358 @@
+<div class="row page-titles mx-0">
+  <div class="col p-md-0">
+    <ol class="breadcrumb"  style="background-color: transparent; float: left;">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+      <li class="breadcrumb-item active"><a href="javascript:void(0)">Đơn hàng</a></li>
+    </ol>
+  </div>
+</div>
+<!-- row -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Quản lý đơn hàng</h4>
+          <div class="table-responsive">
+
+
+            <!-- form search ----------------------------------------------->
+
+            <form [formGroup]="frmSearch" class="form-horizontal" (ngSubmit)="LoadData(this.pageSize)" >
+              
+              <div class="row">
+
+                <div class="form-group" style="display: flex;">
+                  <label class="col-lg-4 control-label" style="text-align: center;padding-top: 10px;">Tên khách hàng:</label>
+                  <div class="col-lg-6 control-label">
+                    <input formControlName="txt_tenkhachhang" style="height: 10px;border-radius: 0.5rem;" type="text" class="form-control" >
+                  </div>
+
+                  
+                  <!-- <div class="col-lg-6">
+                    <input formControlName="txt_mota" style="height: 10px;width: 200px;" type="text" class="form-control" placeholder="mota">
+                  </div> -->
+                  
+                  <div class="col-lg-4 control-label">
+                    <button type="submit" class="btn btn-primary"><i class="icon-search4 position-right"></i> Tìm kiếm</button>
+                  </div>
+                </div> 
+                
+              </div>
+              
+            </form>
+            <div style="margin-bottom: 30px;">
+              <div class="heading-elements" style="display: flex;justify-content: end;">
+                <select style="height: 36px;width: 38px;border-radius: 5px;" class="name" (ngModelChange)="LoadData($event)" [(ngModel)]="pageSize" [ngModelOptions]="{standalone: true}">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option> 
+                  <option value="20">20</option>
+              </select>
+              </div>
+            </div>
+            
+            <!-- form search ----------------------------------------------->
+
+            <!-- Basic datatable -->
+            <div class="panel panel-flat">
+
+              <form action="" [formGroup]="frmDonHang">
+                <!-- <select class="name" (ngModelChange)="LoadData($event)" [(ngModel)]="pageSize" [ngModelOptions]="{standalone: true}">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option> 
+                  <option value="20">20</option>
+                </select> -->
+  
+                <table class="table table-hover table-bordered">
+                  <thead style=" background-color: #f2f2f9;">
+                    <tr>
+                      <th style="white-space: nowrap;">ID Đơn</th>
+                      <th style="white-space: nowrap;">Tên Khách hàng</th>
+                      <!-- <th style="white-space: nowrap;min-width: 200px;">Địa chỉ giao hàng</th> -->
+                      <!-- <th style="white-space: nowrap;">SĐT</th> -->
+                      <th style="white-space: nowrap; min-width: 120px;">Tổng tiền</th>
+                      <th style="white-space: nowrap;">Phương thức thanh toán</th>
+                      <th style="white-space: nowrap;">Trạng thái thanh toán</th>
+                      <th style="white-space: nowrap;">Ngày đặt</th>
+                      <!-- <th style="white-space: nowrap;min-width: 200px;">Ghi chú</th> -->
+                      <!-- <th style="white-space: nowrap;">Mã khuyến mãi</th> -->
+                
+                      <th style="white-space: nowrap;min-width: 175px">Trạng thái đơn</th>
+                      
+                      <!-- <th>Trạng thái</th> -->
+                      <th class="text-center">Chức năng</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let dh of list_donhangs | paginate: { itemsPerPage: 6, currentPage: p}">
+                      <td>{{dh.idDonHang}}</td>
+                      <td>{{dh.tenKhachHang}}</td>
+                      <!-- <td>{{dh.diaChiGiaoHang}}</td> -->
+                      <!-- <td>{{dh.sdt}}</td> -->
+                      <td>{{dh.tongTien.toLocaleString()}} VNĐ</td>
+                      <td>{{dh.phuongThucThanhToan}}</td>
+                      
+
+                    <td><span class="label" [class.label-success]="dh.trangThaiThanhToan == 1" [class.label-danger]="dh.trangThaiThanhToan== 0">{{ dh.trangThaiThanhToan == 1 ? 'Đã thanh toán' : 'Chưa thanh toán' }}</span></td>
+                  
+                      <td>{{dh.ngayDat| date:'dd/MM/yyyy'}}</td>
+
+                      <td *ngIf="dh.trangThaiDonHang==='Giao hàng thành công'"><span class="label label-success">{{dh.trangThaiDonHang}}</span></td>
+                      <td *ngIf="(dh.trangThaiDonHang!=='Giao hàng thành công')&&(dh.trangThaiDonHang!=='Đã hủy')"><span class="label label-info">{{dh.trangThaiDonHang}}</span></td>
+                      <td *ngIf="dh.trangThaiDonHang==='Đã hủy'"><span class="label label-danger">{{dh.trangThaiDonHang}}</span></td>
+                     
+  
+                      <td class="text-center">
+                        <ul class="icons-list">
+                          <a style="margin-right: 5px; cursor: pointer;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='';" (click)="xemChiTiet(dh.idDonHang)">XemCT</a>
+
+                          <a style="margin-right: 5px;" (click)="suaModal(dh.idDonHang)" ><i class="ti-write"></i></a>
+                          <a  (click)="xoaModal(dh.idDonHang)"><i class="icon-trash"></i></a>
+                        </ul>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </form>
+              
+            </div>
+            <ngb-pagination (pageChange)="loadPage($event)" [(page)]="page" [pageSize]="pageSize" [collectionSize]="tongsp">
+            </ngb-pagination>
+            <!-- enddatatable -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- #/ container -->
+
+
+<!-- Large modal -->
+<div *ngIf="hienThiModal" class="modal fade" id="hienthiModal">
+	<div class="modal-dialog modal-lg"  style="max-width: 900px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title">Đơn hàng</h5>
+			</div>
+			<hr>
+			<form *ngIf="okForm" [formGroup]="frmDonHang" (ngSubmit)="OnSubmit(frmDonHang.value)"
+				class="form-horizontal">
+				<div class="modal-body" style="padding-left: 50px !important; padding-right:50px !important;">
+					
+          <div class="row">
+
+              <div class="form-group col-md-6">
+                <label class="col-lg-12 control-label">Tên khách hàng<span style="color:red ;">*</span></label>
+                <div class="col-lg-12">
+                  <input formControlName="txt_tenkhachhang" type="text" class="form-control" readonly
+                    >
+                  
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label class="col-lg-12 control-label">Số điện thoại<span style="color:red ;">*</span></label>
+                <div class="col-lg-12">
+                  <input formControlName="txt_sdt" type="text" class="form-control" readonly
+                    >
+                  
+                </div>
+              </div>
+
+					</div>
+
+          <div class="row">
+
+            <div class="form-group col-md-6">
+              <label class="col-lg-12 control-label">Tổng tiền<span style="color:red ;">*</span></label>
+              <div class="col-lg-12">
+                <input formControlName="txt_tongtien" type="text" class="form-control" readonly
+                  >
+                
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label class="col-lg-12 control-label">Ngày đặt hàng<span style="color:red ;">*</span></label>
+              <div class="col-lg-12">
+                <input formControlName="txt_ngaydat" type="text" class="form-control" readonly
+                 >
+                
+              </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+          <div class="form-group col-md-6">
+            <label class="col-lg-12 control-label">Địa chỉ giao hàng<span style="color:red ;">*</span></label>
+            <div class="col-lg-12">
+              <input formControlName="txt_diachigiaohang" type="text" class="form-control" readonly
+                >
+              
+            </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="col-lg-12 control-label">Ghi chú<span style="color:red ;">*</span></label>
+            <div class="col-lg-12">
+              <input formControlName="txt_ghichu" type="text" class="form-control" readonly
+               >
+              
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="row">
+
+          <div class="form-group col-md-6">
+            <label class="col-lg-12 control-label">Mã khuyến mại<span style="color:red ;">*</span></label>
+            <div class="col-lg-12">
+              <input formControlName="txt_makhuyenmai" type="text" class="form-control" readonly
+                >
+              
+            </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="col-lg-12 control-label">Phương thức thanh toán<span style="color:red ;">*</span></label>
+            <div class="col-lg-12">
+              <input formControlName="txt_phuongthucthanhtoan" type="text" class="form-control" readonly
+               >
+              
+            </div>
+          </div>
+
+        </div>
+
+
+
+
+        <div class="row">
+
+          <div class="form-group col-md-6" >
+						<label class="col-lg-12 control-label">Trạng thái thanh toán<span style="color:red ;">*</span>:</label>
+
+							<div class="col-lg-12">
+								<select formControlName="txt_trangthaithanhtoan"  [(ngModel)]="trangThaiThanhToan" class="form-control" (change)="changeTrangThaiThanhToan($event)">
+									<option [value]=1>Đã thanh toán</option>
+									<option [value]=0>Chưa thanh toán</option>
+								</select>
+							</div>
+					</div>
+
+          <div class="form-group col-md-6" >
+						<label class="col-lg-12 control-label">Trạng thái đơn hàng<span style="color:red ;">*</span>:</label>
+
+							<div class="col-lg-12">
+								<select formControlName="txt_trangthaidonhang"  [(ngModel)]="trangThaiDonHang" class="form-control" (change)="changeTrangThaiDonHang($event)">
+									<option [value]="'Chờ xác nhận'" [disabled]="frmDonHang.get('txt_trangthaidonhang')!.value== 'Đã xác nhận' 
+                                                                ||frmDonHang.get('txt_trangthaidonhang')!.value== 'Đang vận chuyển'">Chờ xác nhận</option>
+									<option [value]="'Đã xác nhận'">Đã xác nhận</option>
+									<option [value]="'Đang vận chuyển'">Đang vận chuyển</option>
+									<option [value]="'Hoàn về'">Hoàn về</option>
+									<option [value]="'Đã hủy'">Đã hủy</option>
+									<option [value]="'Giao hàng thành công'" [disabled]="frmDonHang.get('txt_trangthaithanhtoan')!.value== 0">Giao hàng thành công</option>
+								</select>
+							</div>
+					</div>
+
+      </div>
+
+					
+
+          
+					
+
+				</div>
+				<hr>
+				<div class="modal-footer" style="justify-content: space-between;">
+         
+          <div>
+            <button type="button" class="btn btn-success" (click)="printHtml()">In hóa đơn</button>
+          </div>
+					
+          <div>
+            <button type="button" class="btn btn-link" (click)="dongModal()">Đóng</button>
+            <button type="submit" class="btn btn-primary" [disabled]="frmDonHang.invalid">Lưu lại</button>
+          </div>
+					
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- /large modal -->
+
+
+<!-- Large modal -->
+<div *ngIf="hienThiModalChiTiet" class="modal fade" id="hienThiModalChiTiet">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title">Chi tiết đơn hàng</h5>
+			</div>
+			<hr>
+			<form *ngIf="okForm" [formGroup]="frmChiTietDonHang" (ngSubmit)="OnSubmit(frmChiTietDonHang.value)"
+				class="form-horizontal">
+				<div class="modal-body" style="padding-left: 50px !important; padding-right:50px !important;">
+
+
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+               
+                <th >Ảnh</th>
+                <th >Tên Sản Phẩm</th>
+                <th >Size</th>
+                <th >Số lượng</th>
+                <th >Gía</th>
+                
+                
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ct of list_chitietdonhangs">
+                <td><img style="height: 50px;width: 50px;" src="http://localhost:2701/{{ct.anhSanPham}}"></td>
+                <td>{{ct.tenSanPham}}</td>
+                <td>{{ct.size}}</td>
+                <td>{{ct.soLuong}}</td>
+                <td>{{ct.giaMua|number}} vnđ</td>
+
+               
+          
+
+                
+              </tr>
+            </tbody>
+          </table>
+
+
+
+
+		
+					
+
+				</div>
+				<hr>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" (click)="dongModalChiTiet()">Đóng</button>
+					<!-- <button type="submit" class="btn btn-primary" [disabled]="frmDonhang.invalid">Lưu lại</button> -->
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- /large modal -->

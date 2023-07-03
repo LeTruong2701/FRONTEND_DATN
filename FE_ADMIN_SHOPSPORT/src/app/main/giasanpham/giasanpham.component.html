@@ -1,0 +1,184 @@
+<div class="row page-titles mx-0">
+  <div class="col p-md-0">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+      <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+    </ol>
+  </div>
+</div>
+<!-- row -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Tìm kiếm</h4>
+          <div class="table-responsive">
+
+
+            <!-- form search ----------------------------------------------->
+
+            <form [formGroup]="frmSearch" class="form-horizontal" (ngSubmit)="LoadData()" >
+              
+              <div class="form-group" style="display: flex;">
+                <label class="col-lg-2 control-label" style="text-align: center;padding-top: 10px;">Tên San pham:</label>
+                <div class="col-lg-6">
+                  <input formControlName="txt_tensanpham" style="height: 10px;width: 200px;" type="text" class="form-control" placeholder="ten">
+                </div>
+                <!-- <div class="col-lg-6">
+                  <input formControlName="txt_mota" style="height: 10px;width: 200px;" type="text" class="form-control" placeholder="mota">
+                </div> -->
+                
+              </div> 
+              <div class="col-lg-4 text-right">
+                <button type="submit" class="btn btn-primary"><i class="icon-search4 position-right"></i> Tìm kiếm</button>
+              </div>
+            </form>
+
+            
+            <!-- form search ----------------------------------------------->
+
+            <!-- Basic datatable -->
+            <div class="panel panel-flat">
+              <div class="panel-heading">
+                <h3 class="panel-title">Gía Sản Phẩm</h3>
+              </div>
+              <div class="heading-elements">
+                <!-- <div class="heading-btn-group btn-primary" style="width:150px">
+                  <a (click)="themModal()" class="btn btn-link btn-float has-text"><i
+                      class="icon-plus22 text-primary"></i><span>Thêm</span></a>
+                </div>  -->
+              </div>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th >Ảnh</th>
+                    <th >Tên Sản Phẩm</th>
+                    <th >Gía</th>
+                    <th >Ngày Bắt Đầu</th>
+                    <th >Ngày Kết Thúc</th>
+                    
+                    
+                    <!-- <th>Trạng thái</th> -->
+                    <th class="text-center">Chức năng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let nsx of list_giasanphams | paginate: { itemsPerPage: 6, currentPage: p}">
+                    <td><img style="height: 70px;width: 70px;" src="http://localhost:2701/{{nsx.anhSanPham}}"></td>
+                    <td>{{nsx.tenSanPham}}</td>
+                    <td>{{nsx.gia}}</td>
+                    <td>{{nsx.ngayBatDau}}</td>
+                    <td>{{nsx.ngayKetThuc}}</td>
+
+                    <!-- <td>{{nsx.moTa}}</td> -->
+                    <td><div [innerHTML]="nsx.moTa"></div></td>
+                   
+                    <!-- <td><span class="label label-success">Active</span></td> -->
+
+                    <td class="text-center">
+                      <ul class="icons-list">
+                        <li><a (click)="suaModal(nsx.idGiaSanPham)"><i class="ti-write"></i></a></li>
+                        <!-- <li><a (click)="xoaNSX(nsx.idNhaSanXuat)"><i class="icon-trash"></i></a></li> -->
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- enddatatable -->
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- #/ container -->
+
+
+<!-- Large modal -->
+<div *ngIf="hienThiModal" class="modal fade" id="hienthiModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title">Nhà Sản Xuất</h5>
+			</div>
+			<hr>
+			<form *ngIf="okForm" [formGroup]="frmGiasanpham" (ngSubmit)="OnSubmit(frmGiasanpham.value)"
+				class="form-horizontal">
+				<div class="modal-body" style="padding-left: 50px !important; padding-right:50px !important;">
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Giá sản phẩm<span style="color:red ;">*</span></label>
+						<div class="col-lg-9">
+							<input formControlName="txt_gia" type="text" class="form-control" placeholder="Giá">
+							<div *ngIf="gia.invalid && (gia.dirty || gia.touched)">
+								<div *ngIf="gia.errors?.['required']" style="color:red ;">Gía không được rỗng</div>
+								<div *ngIf="gia.errors?.['min']" style="color:red ;">
+									Gía không được nhỏ 100.000 Vnđ
+								</div>
+								<!-- <div *ngIf="gia.errors?.['maxlength']" style="color:red ;">
+									Họ tên không được lớn hơn 250 ký tự
+								</div> -->
+							</div>
+						</div>
+					</div>
+
+
+
+          <div class="form-group">
+						<label class="col-lg-3 control-label">Ngày bat dau<span style="color:red ;">*</span>:</label>
+						<div class="col-lg-9">
+							<input formControlName="txt_ngaybatdau" type="date" class="form-control"
+								placeholder="Ngày bat dau">
+							<div *ngIf="ngaybatdau.invalid && (ngaybatdau.dirty || ngaybatdau.touched)">
+								<div *ngIf="ngaybatdau.errors?.['required']" style="color:red ;">Ngày sinh không được rỗng
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+          <div class="form-group">
+						<label class="col-lg-3 control-label">Ngày ket thuc:</label>
+						<div class="col-lg-9">
+							<input formControlName="txt_ngayketthuc" type="date" class="form-control"
+								placeholder="Ngày ket thuc">
+							<!-- <div *ngIf="ngayketthuc.invalid && (ngayketthuc.dirty || ngayketthuc.touched)">
+								<div *ngIf="ngayketthuc.errors?.['required']" style="color:red ;">Ngày sinh không được rỗng
+								</div>
+							</div> -->
+						</div>
+					</div>
+
+
+
+
+
+
+					<!-- <div class="form-group">
+						<label class="col-lg-3 control-label">Mô tả<span style="color:red ;">*</span>:</label>
+						<div class="col-lg-9">
+							<ckeditor formControlName="txt_mota" ></ckeditor>
+							<div *ngIf="mota.invalid && (mota.dirty || mota.touched)">
+								<div *ngIf="mota.errors?.['required']" style="color:red ;">Ngày sinh không được rỗng
+								</div>
+							</div>
+						</div>
+					</div> -->
+					
+
+				</div>
+				<hr>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" (click)="dongModal()">Đóng</button>
+					<button type="submit" class="btn btn-primary" [disabled]="frmGiasanpham.invalid">Lưu lại</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- /large modal -->

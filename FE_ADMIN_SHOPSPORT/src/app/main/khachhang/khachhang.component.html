@@ -1,0 +1,124 @@
+<div class="row page-titles mx-0">
+  <div class="col p-md-0">
+    <ol class="breadcrumb" style="background-color: transparent; float: left;">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+      <li class="breadcrumb-item active"><a href="javascript:void(0)">Khách hàng</a></li>
+    </ol>
+  </div>
+</div>
+<!-- row -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Quản lý khách hàng</h3>
+          <div class="table-responsive">
+
+            <!-- form search ----------------------------------------------->
+
+            <form [formGroup]="frmSearch" class="form-horizontal" (ngSubmit)="LoadData(this.pageSize)" >
+              
+              <div class="row">
+
+                <div class="form-group" style="display: flex;">
+                  <label class="col-lg-4 control-label" style="text-align: center;padding-top: 10px;">Nhập thông tin:</label>
+                  <div class="col-lg-6 control-label">
+                    <input formControlName="txt_tenkhachhang" style="height: 10px;border-radius: 0.5rem;" type="text" class="form-control" >
+                  </div>
+                  <!-- <div class="col-lg-6">
+                    <input formControlName="txt_mota" style="height: 10px;width: 200px;" type="text" class="form-control" placeholder="mota">
+                  </div> -->
+                  
+                  <div class="col-lg-4 control-label">
+                    <button type="submit" class="btn btn-primary"><i class="icon-search4 position-right"></i> Tìm kiếm</button>
+                  </div>
+                </div> 
+                
+              </div>
+              
+            </form>
+            <div style="margin-bottom: 30px;">
+              <div class="heading-elements" style="display: flex;justify-content: end;">
+                <select style="height: 36px;width: 38px;border-radius: 5px;" class="name" (ngModelChange)="LoadData($event)" [(ngModel)]="pageSize">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option> 
+                  <option value="20">20</option>
+              </select>
+              </div>
+            </div>
+
+            <!-- <div style="margin-bottom: 30px;">
+              <div class="heading-elements" >
+               
+                <button (click)="themModal()" style="float: left;" _ngcontent-fds-c8="" class="btn btn-primary pull-right mat-raised-button" mat-raised-button="" type="submit">
+                  <i class="fa fa-plus" style="margin-right: 5px;"></i>
+                  <span  class="mat-button-wrapper">Thêm sản phẩm</span>
+                  <div class="mat-button-ripple mat-ripple" matripple=""></div><div class="mat-button-focus-overlay"></div>
+                </button>
+              </div>
+            </div> -->
+            <!-- form search ----------------------------------------------->
+
+            <!-- Basic datatable -->
+            <div class="panel panel-flat" >
+              
+              
+             
+             
+              <table class="table table-hover table-bordered" >
+                <thead style=" background-color: #f2f2f9;">
+                  <tr>
+                    <th style="white-space: nowrap;">Tên Khách Hàng</th>
+                    <th style="white-space: nowrap;">Giới tính</th>
+                    <th style="white-space: nowrap;">Ngày sinh</th>
+                    <th style="white-space: nowrap;">Địa chỉ</th>
+                    <th style="white-space: nowrap;">SDT</th>
+                    <th style="white-space: nowrap;">Email</th>
+                    <th style="white-space: nowrap;">Ảnh đại diện</th>
+                    <th style="white-space: nowrap;">Ngày Tham gia</th>
+
+                    
+                    <!-- <th>Trạng thái</th> -->
+                    <th class="text-center">Chức năng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let kh of list_khachhangs">
+                    <td>{{kh.tenKhachHang}}</td>
+                    <td>{{kh.gioiTinh}}</td>
+                    <td>{{kh.ngaySinh| date:'dd/MM/yyyy'}}</td>
+                    <td style="width: 200px;">{{kh.diaChi}}</td>
+                    <td>{{kh.sdt}}</td>
+                    <td>{{kh.email}}</td>
+                    <td><img style="height: 70px;width: 70px;" src="{{kh.anhDaiDien}}"></td>
+                    <td>{{kh.ngayTao| date:'dd/MM/yyyy'}}</td>
+                    <!-- <td><span class="label" [class.label-success]="kh.trangThai == 1" [class.label-danger]="kh.trangThai== 0">{{ kh.trangThai == 1 ? 'Active' : 'NoActive' }}</span></td> -->
+                    <!-- <td><div [innerHTML]="kh.moTa"></div></td> -->
+                   
+                    <!-- <td><span class="label label-success">Active</span></td> -->
+
+                    <td class="text-center">
+                      <div class="icons-list" >
+                        
+                        <a (click)="xoaKH(kh.idKhachHang)"><i class="icon-trash"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- enddatatable -->
+            <ngb-pagination (pageChange)="loadPage($event)" [(page)]="page" [pageSize]="pageSize" [collectionSize]="tongsp">
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- #/ container -->
+
+

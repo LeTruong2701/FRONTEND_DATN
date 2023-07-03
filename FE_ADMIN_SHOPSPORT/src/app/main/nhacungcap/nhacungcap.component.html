@@ -1,0 +1,195 @@
+<div class="row page-titles mx-0">
+  <div class="col p-md-0">
+    <ol class="breadcrumb" style="background-color: transparent; float: left;">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+      <li class="breadcrumb-item active"><a href="javascript:void(0)">Nhà Cung Cấp</a></li>
+    </ol>
+  </div>
+</div>
+<!-- row -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Quản lý nhà cung cấp</h4>
+          <div class="table-responsive">
+
+
+            <!-- form search ----------------------------------------------->
+
+            <form [formGroup]="frmSearch" class="form-horizontal" (ngSubmit)="LoadData(this.pageSize)" >
+              
+              <div class="row">
+
+                <div class="form-group" style="display: flex;">
+                  <label class="col-lg-4 control-label" style="text-align: center;padding-top: 10px;">Tên,Địa chỉ nhà cung cấp:</label>
+                  <div class="col-lg-6 control-label">
+                    <input formControlName="txt_tennhacungcap" style="height: 10px;border-radius: 0.5rem;" type="text" class="form-control" >
+                  </div>
+                  <!-- <div class="col-lg-6">
+                    <input formControlName="txt_mota" style="height: 10px;width: 200px;" type="text" class="form-control" placeholder="mota">
+                  </div> -->
+                  
+                  <div class="col-lg-4 control-label">
+                    <button type="submit" class="btn btn-primary"><i class="icon-search4 position-right"></i> Tìm kiếm</button>
+                  </div>
+                </div> 
+                
+              </div>
+              
+            </form>
+      
+            <!-- form search ----------------------------------------------->
+
+            <div style="margin-bottom: 30px;">
+              <div class="heading-elements" style="display: flex;justify-content: space-between;" >
+                <!-- <div class="heading-btn-group btn-primary" style="width:150px">
+                  <a (click)="themModal()" class="btn btn-link btn-float has-text"><i
+                      class="icon-plus22 text-primary"></i><span>Thêm</span></a>
+                </div>  -->
+                <button (click)="themModal()" style="float: left;" _ngcontent-fds-c8="" class="btn btn-primary pull-right mat-raised-button" mat-raised-button="" type="submit">
+                  <i class="fa fa-plus" style="margin-right: 5px;"></i>
+                  <span  class="mat-button-wrapper">Thêm nhà cung cấp</span>
+                  <div class="mat-button-ripple mat-ripple" matripple=""></div><div class="mat-button-focus-overlay"></div>
+                </button>
+
+                <select style="border-radius: 5px;" class="name" (ngModelChange)="LoadData(pageSize)" [(ngModel)]="pageSize">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option> 
+                  <option value="20">20</option>
+              </select>
+              </div>
+            </div>
+
+            <!-- Basic datatable -->
+            <div class="panel panel-flat">
+              
+
+              
+              <table class="table table-hover table-bordered">
+                <thead style=" background-color: #f2f2f9;">
+                  <tr>
+                    <th >Tên Nhà Cung Cấp</th>
+                    <th>Địa chỉ</th>
+                    <th>SĐT</th>
+                    <th>Email</th>
+                    
+                    <!-- <th>Trạng thái</th> -->
+                    <th class="text-center">Chức năng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let ncc of list_nhacungcaps">
+                    <td>{{ncc.tenNhaCungCap}}</td>
+                    <td>{{ncc.diaChi}}</td>
+                    <td>{{ncc.sdt}}</td>
+                    <td>{{ncc.email}}</td>
+                   
+                    <!-- <td><span class="label label-success">Active</span></td> -->
+
+                    <td class="text-center">
+                      <ul class="icons-list">
+                        <li><a (click)="suaModal(ncc.idNhaCungCap)"><i class="ti-write"></i></a></li>
+                        <li><a (click)="xoaNSX(ncc.idNhaCungCap)"><i class="ti-eraser"></i></a></li>
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- enddatatable -->
+            
+            <ngb-pagination (pageChange)="loadPage($event)" [(page)]="page" [pageSize]="pageSize" [collectionSize]="totalItem">
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- #/ container -->
+
+
+<!-- Large modal -->
+<div *ngIf="hienThiModal" class="modal fade" id="hienthiModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title">Nhà Cung Cấp</h5>
+			</div>
+			<hr>
+			<form *ngIf="okForm" [formGroup]="frmNhacungcap" (ngSubmit)="OnSubmit(frmNhacungcap.value)"
+				class="form-horizontal">
+				<div class="modal-body" style="padding-left: 50px !important; padding-right:50px !important;">
+					<div class="form-group">
+						<label class="col-lg-12 control-label">Tên Nhà Cung Cấp<span style="color:red ;">*</span></label>
+						<div class="col-lg-9">
+							<input formControlName="txt_tennhacungcap" type="text" class="form-control" placeholder="Tên nhà cung cấp">
+							<div *ngIf="tennhacungcap.invalid && (tennhacungcap.dirty || tennhacungcap.touched)">
+								<div *ngIf="tennhacungcap.errors?.['required']" style="color:red ;">Tên không được để trống</div>
+								<div *ngIf="tennhacungcap.errors?.['minlength']" style="color:red ;">
+									Tên không được nhỏ hơn 6 ký tự
+								</div>
+								<div *ngIf="tennhacungcap.errors?.['maxlength']" style="color:red ;">
+									Tên không được lớn hơn 100 ký tự
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Địa chỉ<span style="color:red ;">*</span>:</label>
+						<div class="col-lg-9">
+							<input formControlName="txt_diachi" type="text" class="form-control"
+								placeholder="Địa chỉ">
+							<div *ngIf="diachi.invalid && (diachi.dirty || diachi.touched)">
+								<div *ngIf="diachi.errors?.['required']" style="color:red ;">Địa chỉ không được để trống
+								</div>
+							</div>
+						</div>
+					</div>
+
+          <div class="form-group">
+						<label class="col-lg-3 control-label">SĐT<span style="color:red ;">*</span>:</label>
+						<div class="col-lg-9">
+							<input formControlName="txt_sdt" type="text" class="form-control"
+								placeholder="SĐT">
+							<div *ngIf="sdt.invalid && (sdt.dirty || sdt.touched)">
+								<div *ngIf="sdt.errors?.['required']" style="color:red ;">SĐT không được rỗng
+								</div>
+                <div *ngIf="sdt.errors?.['pattern']" style="color:red ;">
+									Không đúng định dạng số điện thoại
+								</div>
+							</div>
+						</div>
+					</div>
+
+          <div class="form-group">
+						<label class="col-lg-3 control-label">Email<span style="color:red ;">*</span>:</label>
+						<div class="col-lg-9">
+							<input formControlName="txt_email" type="text" class="form-control"
+								placeholder="Email">
+							<div *ngIf="email.invalid && (email.dirty || email.touched)">
+								<div *ngIf="email.errors?.['required']" style="color:red ;">Email không được rỗng
+								</div>
+                <div *ngIf="email.errors?.['pattern']" style="color:red ;">
+									Không đúng định dạng email
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<hr>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" (click)="dongModal()">Đóng</button>
+					<button type="submit" class="btn btn-primary" >Lưu lại</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- /large modal -->
