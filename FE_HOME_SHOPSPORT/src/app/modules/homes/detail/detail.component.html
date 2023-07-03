@@ -1,0 +1,600 @@
+<!-- Page Preloder -->
+<!-- <div id="preloder">
+  <div class="loader"></div>
+</div> -->
+
+
+
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="breadcrumb-text product-more">
+                  <a href="./home.html"><i class="fa fa-home"></i> Home</a>
+                  <a href="./shop.html">Shop</a>
+                  <span>Detail</span>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- Breadcrumb Section Begin -->
+
+<!-- Product Shop Section Begin -->
+<section class="product-shop spad page-details">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-3">
+              <div class="filter-widget">
+                  <h4 class="fw-title">Danh mục</h4>
+                  <ul class="filter-catagories">
+                      <li><a href="#">Áo thể thao</a></li>
+                      <li><a href="#">Quần thể thao</a></li>
+                      <li><a href="#">Big Sale</a></li>
+                  </ul>
+              </div>
+              <div class="filter-widget">
+                  <h4 class="fw-title">Thương hiệu</h4>
+                  <div class="fw-brand-check">
+                      <div class="bc-item">
+                          <label for="bc-calvin">
+                              ADIDAS
+                              <input type="checkbox" id="bc-calvin">
+                              <span class="checkmark"></span>
+                          </label>
+                      </div>
+                      <div class="bc-item">
+                          <label for="bc-diesel">
+                              NIKE
+                              <input type="checkbox" id="bc-diesel">
+                              <span class="checkmark"></span>
+                          </label>
+                      </div>
+                      <div class="bc-item">
+                          <label for="bc-polo">
+                              PUMA
+                              <input type="checkbox" id="bc-polo">
+                              <span class="checkmark"></span>
+                          </label>
+                      </div>
+                      <div class="bc-item">
+                          <label for="bc-tommy">
+                             FILA
+                              <input type="checkbox" id="bc-tommy">
+                              <span class="checkmark"></span>
+                          </label>
+                      </div>
+                  </div>
+              </div>
+              <!-- <div class="filter-widget">
+                  <h4 class="fw-title">Price</h4>
+                  <div class="filter-range-wrap">
+                      <div class="range-slider">
+                          <div class="price-input">
+                              <input type="text" id="minamount">
+                              <input type="text" id="maxamount">
+                          </div>
+                      </div>
+                      <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                          data-min="33" data-max="98">
+                          <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                          <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                          <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                      </div>
+                  </div>
+                  <a href="#" class="filter-btn">Filter</a>
+              </div>
+              <div class="filter-widget">
+                  <h4 class="fw-title">Color</h4>
+                  <div class="fw-color-choose">
+                      <div class="cs-item">
+                          <input type="radio" id="cs-black">
+                          <label class="cs-black" for="cs-black">Black</label>
+                      </div>
+                      <div class="cs-item">
+                          <input type="radio" id="cs-violet">
+                          <label class="cs-violet" for="cs-violet">Violet</label>
+                      </div>
+                      <div class="cs-item">
+                          <input type="radio" id="cs-blue">
+                          <label class="cs-blue" for="cs-blue">Blue</label>
+                      </div>
+                      <div class="cs-item">
+                          <input type="radio" id="cs-yellow">
+                          <label class="cs-yellow" for="cs-yellow">Yellow</label>
+                      </div>
+                      <div class="cs-item">
+                          <input type="radio" id="cs-red">
+                          <label class="cs-red" for="cs-red">Red</label>
+                      </div>
+                      <div class="cs-item">
+                          <input type="radio" id="cs-green">
+                          <label class="cs-green" for="cs-green">Green</label>
+                      </div>
+                  </div>
+              </div> -->
+              <div class="filter-widget">
+                  <h4 class="fw-title">Size</h4>
+                  <div class="fw-size-choose">
+                      <div class="sc-item">
+                          <input type="radio" id="s-size">
+                          <label for="s-size">M</label>
+                      </div>
+                      <div class="sc-item">
+                          <input type="radio" id="m-size">
+                          <label for="m-size">L</label>
+                      </div>
+                      <div class="sc-item">
+                          <input type="radio" id="l-size">
+                          <label for="l-size">XL</label>
+                      </div>
+                      <div class="sc-item">
+                          <input type="radio" id="xs-size">
+                          <label for="xs-size">XXL</label>
+                      </div>
+                  </div>
+              </div>
+              <div class="filter-widget">
+                  <h4 class="fw-title">Tags</h4>
+                  <div class="fw-tags">
+                    
+                      <a href="#">quanthethao</a>
+                      <a href="#">aothethao</a>
+                      <a href="#">sanphammoi</a>
+                      <a href="#">sieusale</a>
+                      <a href="#">blackfrideday</a>
+                      <!-- <a href="#">Men's hats</a>
+                      <a href="#">Backpack</a> -->
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-9">
+              <div class="row">
+                  <div class="col-lg-6">
+                      <div class="product-pic-zoom">
+                          <img class="product-big-img" [src]="'http://localhost:2701/'+anhSanPham" alt="">
+                          <div class="zoom-icon">
+                              <i class="fa fa-search-plus"></i>
+                          </div>
+                      </div>
+                      <div class="product-thumbs">
+                        <div class="product-thumbs-track ps-slider owl-carousel" style="display: flex;">
+                          <div class="pt active" *ngFor="let i of item_mau" [attr.data-imgbigurl]="'http://localhost:2701/' + i.anhSanPham">
+                            <img [src]="'http://localhost:2701/'+i.anhSanPham" alt="">
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- <div class="product-thumbs" *ngFor="let i of item_mau">
+                          <div class="product-thumbs-track ps-slider owl-carousel" >
+                              <div class="pt active" [attr.data-imgbigurl]="'http://localhost:2701/' + i.anhSanPham"><img
+                                [src]="'http://localhost:2701/'+i.anhSanPham" alt=""></div>
+                              
+                          </div>
+                      </div> -->
+                  </div>
+                  <div class="col-lg-6">
+                      <div class="product-details">
+                          <div class="pd-title">
+                              <span>SportShop</span>
+                              <h3 *ngIf="item">{{item.tenSanPham}}</h3>
+                              <div class="pd-desc" *ngIf="sanpham && sanpham.minGiaSP && sanpham.minGiaSP==sanpham.maxGiaSP">
+
+                                <h4>{{sanpham.minGiaSP.toLocaleString()}} VNĐ<span></span></h4>
+                            </div>
+                              <div class="pd-desc"*ngIf="sanpham && sanpham.minGiaSP &&sanpham.minGiaSP!=sanpham.maxGiaSP">
+
+                                  <h4>{{sanpham.minGiaSP.toLocaleString()}}-{{sanpham.maxGiaSP.toLocaleString()}} VNĐ<span></span></h4>
+                              </div>
+                          </div>
+                          <div class="pd-rating">
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star-o"></i>
+                              <span>(5)</span>
+                          </div>
+                          <div class="pd-desc">
+                              <p *ngIf="item">{{item.tenSanPham}} là một trong những sản phẩm được ưa chuộng của cửa hàng. Với chất lượng cùng giá thành hợp lý, mang đến trải nghiệm hài lòng với khách hàng.</p>
+                              <h4 *ngIf="item">{{item.giaBan.toLocaleString()}} VNĐ<span></span></h4>
+                          </div>
+                          <div class="pd-color">
+                              <h6>Màu sắc</h6>
+                              <div class="pd-color-choose" *ngIf="item_mau!null ">
+                                  <div class="cc-item" *ngFor="let spmau of item_mau">
+                                      <div *ngIf="spmau.idMauSanPham==idmauspdautien" >
+                                        <div (click)="chon(spmau.idMauSanPham,$event)"    class="mau active1"  style=" height: 30px; width: 30px;cursor: pointer;border: 1px solid black;border-radius: 3px; "[ngStyle]="{'background-color':spmau.maMau}">
+                                        </div>
+                                       
+                                      </div> 
+                                      <div *ngIf="spmau.idMauSanPham!=idmauspdautien" >
+                                        <div (click)="chon(spmau.idMauSanPham,$event)"    class="mau"  style=" height: 30px; width: 30px;cursor: pointer;border: 1px solid black;border-radius: 3px; "[ngStyle]="{'background-color':spmau.maMau}">
+                                        </div>
+                                       
+                                      </div> 
+                                      
+                                  </div>
+                                  
+                                 
+                                  <!-- <div class="cc-item">
+                                      
+                                      <label for="cc-yellow" class="cc-yellow"></label>
+                                  </div>
+                                  <div class="cc-item">
+                                     
+                                      <label for="cc-violet" class="cc-violet"></label>
+                                  </div> -->
+                              </div>
+                          </div>
+                          <div *ngIf="list_size_sp && list_size_sp!==null && list_size_sp[0].size!=''">
+                            
+                            <div class="pd-size-choose" style="display: flex;align-items: center;"  >
+                                <h6 style="font-weight: bold;margin-right: 37px;">Size</h6>
+                                <div   *ngFor="let ssp of list_size_sp">
+                                    <div *ngIf="ssp.idSizeSanPham==idsizespdautien">
+                                        <div (click)="chonSize(ssp.size,ssp.idSizeSanPham,$event)" class="size activesize">{{ssp.size}}
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="ssp.idSizeSanPham!=idsizespdautien">
+                                        <div (click)="chonSize(ssp.size,ssp.idSizeSanPham,$event)" class="size">{{ssp.size}}
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                               
+                            </div>
+                          </div>
+                          <div *ngIf="list_size_sp &&list_size_sp[0].size===''">
+                            
+                            
+                          </div>
+                          
+                            <div class="soluong">
+                                <p class="mySoluongcosan" [(ngModel)]="soluongcosan" >{{soluongcosan}} sản phẩm có sẵn</p>
+                            </div>
+                      
+                          <div class="quantity" *ngIf="soluongcosan!=0">
+                            <div class="pro-qty">
+                                <div>
+
+                                    <span class="dec qtybtn" (click)="giamQuantity()">-</span>
+                                    <input type="text" class="mySoluong" [(ngModel)]="soluongmua"  value="{{soluongmua}}" >
+                                    <span class="inc qtybtn" (click)="tangQuantity()">+</span>
+                                </div>
+                            </div>
+                              <a style="cursor: pointer;" class="primary-btn pd-cart" (click)="_addToCart(item)">Thêm vào giỏ</a>
+                          </div>
+
+                          <div  *ngIf="soluongcosan==0">
+                            <div >
+                                <div>
+                                    <h5>Sản phẩm đã hết! Mời bạn chọn sản phẩm khác.</h5>
+                                </div>
+                                <br>
+                            </div>
+                              
+                          </div>
+
+
+
+
+
+
+
+                          <ul class="pd-tags" *ngIf="sanpham">
+                              <!-- <li><span>CATEGORIES</span>: More Accessories, Wallets & Cases</li> -->
+                              <li><span>Thương hiệu</span>: {{sanpham.tenThuongHieu}}</li>
+                              <li><span>Xuất xứ</span>: {{sanpham.xuatXu}}</li>
+                              <li><span>Chất liệu</span>: {{sanpham.chatLieu}}</li>
+                              <li><span>TAGS</span>: quanaothethao, sanphammoi, Man</li>
+                            
+                          </ul>
+                          <div class="pd-share">
+                              <div class="p-code">Sku : 00012</div>
+                              <div class="pd-social">
+                                  <a href="#"><i class="ti-facebook"></i></a>
+                                  <a href="#"><i class="ti-twitter-alt"></i></a>
+                                  <a href="#"><i class="ti-linkedin"></i></a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="product-tab">
+                  <div class="tab-item">
+                      <ul class="nav" role="tablist">
+                          <li>
+                              <a class="active" data-toggle="tab" href="#tab-1" role="tab">Mô Tả</a>
+                          </li>
+                          <!-- <li>
+                              <a data-toggle="tab" href="#tab-2" role="tab">Thông số kỹ thuật</a>
+                          </li> -->
+                          <li>
+                              <a data-toggle="tab" href="#tab-3" role="tab">Góp ý khách hàng</a>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="tab-item-content">
+                      <div class="tab-content">
+                          <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+                              <div class="product-content">
+                                  <div class="row">
+                                      <div class="col-lg-7">
+                                          <h5>Mô tả</h5>
+                                          <div *ngIf="item">
+                                            <p style="width:100%" [innerHTML]="item.moTaSanPham"></p>
+                                        </div>
+                                          <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                                              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+                                              ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                              aliquip ex ea commodo consequat. Duis aute irure dolor in </p>
+                                          <h5>Features</h5>
+                                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                                              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+                                              ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                              aliquip ex ea commodo consequat. Duis aute irure dolor in </p> -->
+                                      </div>
+                                      <div class="col-lg-5" *ngIf="item">
+                                          <img src="http://localhost:2701/{{item.anhSanPham}}" alt="">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <!-- <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                              <div class="specification-table">
+                                  <table>
+                                      <tr>
+                                          <td class="p-catagory">Customer Rating</td>
+                                          <td>
+                                              <div class="pd-rating">
+                                                  <i class="fa fa-star"></i>
+                                                  <i class="fa fa-star"></i>
+                                                  <i class="fa fa-star"></i>
+                                                  <i class="fa fa-star"></i>
+                                                  <i class="fa fa-star-o"></i>
+                                                  <span>(5)</span>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td class="p-catagory">Price</td>
+                                          <td>
+                                              <div class="p-price">$495.00</div>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td class="p-catagory">Add To Cart</td>
+                                          <td>
+                                              <div class="cart-add">+ add to cart</div>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td class="p-catagory">Availability</td>
+                                          <td>
+                                              <div class="p-stock">22 in stock</div>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td class="p-catagory">Weight</td>
+                                          <td>
+                                              <div class="p-weight">1,3kg</div>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td class="p-catagory">Size</td>
+                                          <td>
+                                              <div class="p-size">Xxl</div>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td class="p-catagory">Color</td>
+                                          <td><span class="cs-color"></span></td>
+                                      </tr>
+                                      <tr>
+                                          <td class="p-catagory">Sku</td>
+                                          <td>
+                                              <div class="p-code">00012</div>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </div>
+                          </div> -->
+                          <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                              <div class="customer-review-option" >
+                                  <h4>Đánh giá khách hàng</h4>
+                                  <div *ngIf="listDanhGia">
+                                    <div class="comment-option" *ngFor="let dg of listDanhGia" >
+                                        <div class="co-item">
+                                            <div class="avatar-pic">
+                                              <img [src]="'http://localhost:2701/'+dg.anhDaiDien" alt="">
+                                            </div>
+                                            <div class="avatar-text" style="display: flex;
+                                            justify-content: space-between;">
+                                            
+                                                <div>
+                                                  <h5>{{dg.tenKhachHang}} <span>{{dg.ngayDanhGia|date:'dd/MM/yyyy'}}</span></h5>
+                                                  <div class="at-reply">{{dg.noiDungDanhGia}}</div>
+                                                </div>
+                                                <div style="margin-top: 10px;" *ngIf="idKhachHangDanhGia&&idKhachHangDanhGia==dg.idKhachHang">
+                                                  <ul>
+                                                      <li style="list-style-type: none; cursor: pointer;" (click)="xoaDanhGia(dg.idDanhGia)">Xóa</li>
+                                                      <li style="list-style-type: none; cursor: pointer;" (click)="suaDanhGia(dg.idDanhGia)">Sửa</li>
+                                                  </ul>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                  </div>
+                                  <div *ngIf="listDanhGia&&listDanhGia.length==0" style="margin-bottom: 30px;">
+                                    <h3>Chưa có góp ý nào!!</h3>
+                                  </div>
+                                  
+                                  <!-- <div class="personal-rating">
+                                      <h6>Your Ratind</h6>
+                                      <div class="rating">
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star-o"></i>
+                                      </div>
+                                  </div> -->
+                                  <div class="leave-comment">
+                                      <h4>Để lại đánh giá sản phẩm</h4>
+                                      <form [formGroup]="frmDanhGiaSP" (ngSubmit)="guiDanhGia(frmDanhGiaSP.value)" action="#" class="comment-form">
+                                          <div class="row">
+                                              <!-- <div class="col-lg-6">
+                                                  <input type="text" placeholder="Name">
+                                              </div>
+                                              <div class="col-lg-6">
+                                                  <input type="text" placeholder="Email">
+                                              </div> -->
+                                              <div class="col-lg-12">
+                                                  <textarea formControlName="txt_danhgia" placeholder="Messages"></textarea>
+                                                  <button type="submit" class="site-btn">Gửi</button>
+                                              </div>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<!-- Product Shop Section End -->
+
+<!-- Related Products Section End -->
+<div class="related-products spad">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="section-title">
+                  <h2>Sản Phẩm Cùng Loại</h2>
+              </div>
+          </div>
+      </div>
+      <div class="row" >
+          <div class="col-lg-3 col-sm-6" *ngFor="let spcl of item_cungloai">
+              <div class="product-item" >
+                  <div class="pi-pic">
+                      <img src="http://localhost:2701/{{spcl.anhSanPham}}" alt="">
+                      
+                      <div class="icon">
+                          <i class="icon_heart_alt"></i>
+                      </div>
+                      <ul>
+                          <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                          <li class="quick-view"><a [routerLink]="['/homes/detail',spcl.idSanPham]">+ Xem ngay</a></li>
+                          <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                      </ul>
+                  </div>
+                  <div class="pi-text">
+                     
+                      <a href="#">
+                          <h5>{{spcl.tenSanPham}}</h5>
+                      </a>
+                      <div class="product-price" *ngIf="spcl.minGiaSP==spcl.maxGiaSP">
+                        {{spcl.minGiaSP.toLocaleString()}}VNĐ
+                        <span></span>
+                    </div>
+                    <div class="product-price" *ngIf="spcl.minGiaSP!=spcl.maxGiaSP">
+                      {{spcl.minGiaSP.toLocaleString()}}VNĐ - {{spcl.maxGiaSP.toLocaleString()}} VNĐ
+                      <span></span>
+                     </div>
+                  </div>
+              </div>
+          </div>
+         
+      </div>
+  </div>
+</div>
+<!-- Related Products Section End -->
+
+<!-- Partner Logo Section Begin -->
+<!-- <div class="partner-logo">
+  <div class="container">
+      <div class="logo-carousel owl-carousel">
+          <div class="logo-item">
+              <div class="tablecell-inner">
+                  <img src="../../assets/img/logo-carousel/logo-1.png" alt="">
+              </div>
+          </div>
+          <div class="logo-item">
+              <div class="tablecell-inner">
+                  <img src="../../assets/img/logo-carousel/logo-2.png" alt="">
+              </div>
+          </div>
+          <div class="logo-item">
+              <div class="tablecell-inner">
+                  <img src="../../assets/img/logo-carousel/logo-3.png" alt="">
+              </div>
+          </div>
+          <div class="logo-item">
+              <div class="tablecell-inner">
+                  <img src="../../assets/img/logo-carousel/logo-4.png" alt="">
+              </div>
+          </div>
+          <div class="logo-item">
+              <div class="tablecell-inner">
+                  <img src="../../assets/img/logo-carousel/logo-5.png" alt="">
+              </div>
+          </div>
+      </div>
+  </div>
+</div> -->
+<!-- Partner Logo Section End -->
+
+<!-- Large modal -->
+<div *ngIf="hienThiModal" class="modal fade" id="hienthiModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title">Sửa Nội Dung Đánh Gía</h5>
+			</div>
+			<hr>
+			<form *ngIf="okForm" [formGroup]="frmDanhGiaSP" (ngSubmit)="guiDanhGia(frmDanhGiaSP.value)"
+				class="form-horizontal">
+				<div class="modal-body" style="padding-left: 50px !important; padding-right:50px !important;">
+
+          
+
+            <div class="form-group col-md-12">
+              <label class="col-lg-12 control-label">Đánh giá cũ<span style="color:red ;">*</span>:</label>
+              <div class="col-lg-12">
+                <input formControlName="txt_danhgiacu" type="text"  class="form-control" readonly>
+                
+              </div>
+            </div>
+
+
+            <div class="form-group col-md-12">
+              <label class="col-lg-12 control-label">Đánh giá mới<span style="color:red ;">*</span></label>
+              <div class="col-lg-12">
+                <input formControlName="txt_danhgiamoi" type="text" class="form-control" >
+               
+              </div>
+            </div>
+
+        
+					
+				</div>
+				<hr>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" (click)="dongModal()">Đóng</button>
+					<button type="submit" class="btn btn-primary" >Lưu lại</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- /large modal -->

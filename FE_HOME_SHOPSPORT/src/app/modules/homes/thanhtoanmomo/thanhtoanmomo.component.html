@@ -1,0 +1,110 @@
+
+<!-- Register Section Begin -->
+<div class="register-login-section spad">
+  <div class="container">
+    <div *ngIf="message=='Success'" class="register-form">
+      <h2>THANH TOÁN THÀNH CÔNG</h2>
+      <form action="#" >
+        
+
+        <div class="row">
+
+          <div class="form-group col-md-6">
+            <div class="col-lg-12" style="margin-bottom: 10px;">
+              <span style="font-weight: bold;">Người nhận:</span><span>{{donHangObj.TenKhachHang}}</span>
+            </div>
+            <div class="col-lg-12" style="margin-bottom: 10px;" >
+              <span style="font-weight: bold;">Số điện thoại:</span><span>{{donHangObj.SDT}}</span>
+            </div>
+            <div class="col-lg-12" style="margin-bottom: 10px;">
+              <span style="font-weight: bold;">Địa chỉ giao hàng:</span><span>{{donHangObj.DiaChiGiaoHang}}</span>
+            </div>
+            <div class="col-lg-12" style="margin-bottom: 10px;">
+              <span style="font-weight: bold;">Ghi chú:</span><span>{{donHangObj.GhiChu}}</span>
+            </div>
+            <div class="col-lg-12" >
+              <span style="font-weight: bold;">Phương thức thanh toán:</span>  <span>   Thanh toán MoMo</span>
+            </div>
+            
+          </div>
+
+
+          <div class="form-group col-md-6">
+            
+            <div class="place-order">
+              <h3 style="margin-left: 150px;">Đơn Hàng Của Bạn</h3>
+              <div class="order-total">
+                <ul class="order-table">
+                 
+                  
+
+                  <table class="table table-hover table-bordered" >
+                    <thead style=" background-color: #f2f2f9;">
+                      <tr>
+                        <th >Tên Sản Phẩm</th>
+                        <th >Số lượng</th>
+                        <th >Giá</th>
+                       
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let it of list_items">
+                        <td>{{it.tenSanPham}} </td>
+                        <td>{{it.soLuong}} </td>
+                        <td><span>{{it.soLuong * it.giaMua|number}}đ</span></td>
+                      
+                        
+                        <!-- <td><span class="label label-success">Active</span></td> -->
+    
+                        
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
+                  <li class="fw-normal">Combination x 1 <span>$120.00</span></li> -->
+                  <!-- <li class="fw-normal">Subtotal <span>$240.00</span></li> -->
+                  <!-- <span>{{tongtienphaithanhtoan|number}} đ</span> -->
+                  <div class="total-price"><span  style="font-weight: bold;    font-size: x-large;">Tổng tiền thanh toán:  </span><span style="font-weight: bold;color: red;    font-size: x-large;">{{donHangObj.TongTien.toLocaleString()}} VNĐ</span></div>
+                  
+                </ul>
+                
+               
+              </div>
+            </div>
+
+
+
+
+
+
+          </div>
+
+        </div>
+
+        <div class="row">
+          <h2 style="    margin-left: 184px;">Cảm ơn quý khách đã ủng hộ cho HODU SPORT !</h2>
+        </div>
+        
+      
+      </form>
+      
+    </div>
+
+
+
+    <div *ngIf="message!='Success'" class="register-form" style="text-align: center;">
+      <h2>THANH TOÁN THẤT BẠI</h2>
+      <div>
+        Rất xin lỗi vì sự cố này, mong quý khách thông cảm. Quý khách có thể thanh toán bằng cách khác.
+      </div>
+      <div style="color: rgb(245, 130, 14);cursor: pointer;" [routerLink]="['/shopping/checkout']">
+        Quay trở lại trang thanh toán
+      </div>
+    </div>
+
+    <div >
+      <div [routerLink]="['/']" style="cursor: pointer;">Quay trở lại trang chủ</div>
+    </div>
+  </div>
+</div>
+<!-- Register Form Section End -->

@@ -1,0 +1,186 @@
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="breadcrumb-text product-more">
+                  <a href="./home.html"><i class="fa fa-home"></i> Home</a>
+                  <a href="./shop.html">Shop</a>
+                  <span>Shopping Cart</span>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- Breadcrumb Section Begin -->
+
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="cart-table">
+                  <table>
+                      <thead>
+                          <tr>
+                              <th>Ảnh</th>
+                              <th class="p-name">Sản phẩm</th>
+                              <th>Size</th>
+                              <th>Giá</th>
+                              <th>Số lượng</th>
+                              <th>Tổng tiền</th>
+                              <th><i class="ti-close"></i></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let x of list">
+                              <td class="cart-pic first-row"><img src="http://localhost:2701/{{x.anhSanPham}}" alt="" style="height: 50px;width:50px"></td>
+                              <td class="cart-title first-row">
+                                  <h5>{{x.tenSanPham}}</h5>
+                              </td>
+                              <td class="p-price first-row">{{x.size}}</td>
+                              <td class="p-price first-row">{{x.giaBan.toLocaleString()}} đ</td>
+                              <td class="qua-col first-row" style="display: flex;">
+                                    <button (click)="GiamSoLuong(x.idMauSanPham,x.size)" style="border: 3px solid #dbdbdb;padding: 4px 10px;background-color: aliceblue;"> - </button>
+                                    <input [(ngModel)]="x.quantity" type="text" value="{{x.quantity}}" readonly style="text-align:center; width: 45px;border: 1px solid #dbdbdb;padding: 4px;margin-left: -5px;margin-right: -5px;">
+                                    <button (click)="TangSoLuong(x.idMauSanPham,x.size)" style="border: 3px solid #dbdbdb;padding: 5px 8px;background-color: aliceblue;"> + </button>
+                              </td>
+                              <td class="total-price first-row">{{(x.giaBan * x.quantity).toLocaleString()}} đ</td>
+                              <td class="close-td first-row"><i (click)="XoaSP(x.idMauSanPham,x.size)" class="ti-close"></i></td>
+                          </tr>
+                          <!-- <tr>
+                              <td class="cart-pic"><img src="img/cart-page/product-2.jpg" alt=""></td>
+                              <td class="cart-title">
+                                  <h5>American lobster</h5>
+                              </td>
+                              <td class="p-price">$60.00</td>
+                              <td class="qua-col">
+                                  <div class="quantity">
+                                      <div class="pro-qty">
+                                          <input type="text" value="1">
+                                      </div>
+                                  </div>
+                              </td>
+                              <td class="total-price">$60.00</td>
+                              <td class="close-td"><i class="ti-close"></i></td>
+                          </tr>
+                          <tr>
+                              <td class="cart-pic"><img src="img/cart-page/product-3.jpg" alt=""></td>
+                              <td class="cart-title">
+                                  <h5>Guangzhou sweater</h5>
+                              </td>
+                              <td class="p-price">$60.00</td>
+                              <td class="qua-col">
+                                  <div class="quantity">
+                                      <div class="pro-qty">
+                                          <input type="text" value="1">
+                                      </div>
+                                  </div>
+                              </td>
+                              <td class="total-price">$60.00</td>
+                              <td class="close-td"><i class="ti-close"></i></td>
+                          </tr> -->
+                      </tbody>
+                  </table>
+              </div>
+              <div class="row">
+                  <div class="col-lg-4">
+                      <div class="cart-buttons">
+                          <a [routerLink]="'/'" class="primary-btn up-cart">Tiếp tục mua hàng</a>
+                          <div style="min-width: 690px;">
+                            <table class="table table-hover table-bordered">
+                                <thead style=" background-color: #f2f2f9;">
+                                  <tr>
+                                    <th >Mã Khuyến Mại</th>
+                                    
+                                  
+                                    <th >Phần Trăm Giảm</th>
+                                    <th >Giá Tiền Giảm</th>
+                                    <th >Điều Kiện Hóa Đơn Trên</th>
+                                    <th >Ngày kết thúc</th>
+                                  
+                                    <!-- <th style="text-align: center;height: 80px;width: 500px;">Tên Khuyến Mại</th> -->
+                                    
+                                    <!-- <th>Trạng thái</th> -->
+                               
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let nsx of khuyenmaihople">
+                                    <td>{{nsx.maKhuyenMai}}</td>
+                                   
+                                    <td>{{nsx.phanTramGiam}}</td>
+                                    <td *ngIf="nsx.giaTienGiam==null">{{nsx.giaTienGiam}}</td>
+                                    <td *ngIf="nsx.giaTienGiam" style="color: #e7ab3c;">{{nsx.giaTienGiam.toLocaleString()}}</td>
+                                    <td *ngIf="nsx.dieuKienHoaDon==null" >{{nsx.dieuKienHoaDon}}</td>
+                                    <td *ngIf="nsx.dieuKienHoaDon" style="color: #e7ab3c;">{{nsx.dieuKienHoaDon.toLocaleString()}}</td>
+                                    <td >{{nsx.ngayKetThuc|date:"dd/MM/yyyy"}}</td>
+                                   
+                                    <!-- <td>{{nsx.moTa}}</td> -->
+                                    
+                                   
+                                    <!-- <td><span class="label label-success">Active</span></td> -->
+                                  </tr>
+                                </tbody>
+                              </table>
+                          </div>
+                          
+                          <!-- <a (click)="capnhatCart()" class="primary-btn up-cart" >Cập nhật giỏ hàng</a> -->
+                      </div>
+                      <!-- <div class="discount-coupon">
+                          <h6>Discount Codes</h6>
+                          <form action="#" class="coupon-form">
+                              <input type="text" placeholder="Enter your codes">
+                              <button type="submit" class="site-btn coupon-btn">Apply</button>
+                          </form>
+                      </div> -->
+                  </div>
+                  <div class="col-lg-4 offset-lg-4">
+                      <div class="proceed-checkout">
+                          <ul>
+                              <!-- <li class="subtotal">Subtotal <span>$240.00</span></li> -->
+                              <li class="cart-total">Tổng tiền <span>{{tongtien.toLocaleString()}} vnđ</span></li>
+                          </ul>
+                          <a [routerLink]="'shopping/checkout'" class="proceed-btn"  (click)="CheckOut()">Tiến tới thanh toán</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<!-- Shopping Cart Section End -->
+
+<!-- Partner Logo Section Begin -->
+<div class="partner-logo">
+  <div class="container">
+      <div class="logo-carousel owl-carousel">
+          <div class="logo-item">
+              <div class="tablecell-inner">
+                  <img src="img/logo-carousel/logo-1.png" alt="">
+              </div>
+          </div>
+          <div class="logo-item">
+              <div class="tablecell-inner">
+                  <img src="img/logo-carousel/logo-2.png" alt="">
+              </div>
+          </div>
+          <div class="logo-item">
+              <div class="tablecell-inner">
+                  <img src="img/logo-carousel/logo-3.png" alt="">
+              </div>
+          </div>
+          <div class="logo-item">
+              <div class="tablecell-inner">
+                  <img src="img/logo-carousel/logo-4.png" alt="">
+              </div>
+          </div>
+          <div class="logo-item">
+              <div class="tablecell-inner">
+                  <img src="img/logo-carousel/logo-5.png" alt="">
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- Partner Logo Section End -->

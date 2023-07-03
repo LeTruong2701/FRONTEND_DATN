@@ -1,0 +1,184 @@
+<!-- Page Preloder -->
+<!-- <div id="preloder">
+  <div class="loader"></div>
+</div> -->
+
+<!-- Header Section Begin -->
+<header class="header-section">
+  <div class="header-top">
+      <div class="container">
+          <div class="ht-left">
+              <div class="mail-service">
+                  <i class=" fa fa-envelope"></i>
+                  ltshop@gmail.com
+              </div>
+              <div class="phone-service">
+                  <i class=" fa fa-phone"></i>
+                  +(84) 37 9517046
+              </div>
+          </div>
+          <div class="ht-right" *ngIf="user">
+            
+              <a [routerLink]="['homes/profilecustomer']" class="login-panel" style="cursor: pointer;"><i class="fa fa-user"></i>Thông tin cá nhân</a>
+              <div class="lan-selector">
+                  <select class="language_drop" name="countries" id="countries" style="width:300px;">
+                      <option value='yt'  data-imagecss="flag yt"
+                          data-title="VietNam">VietNam</option>
+                      <option value='yu' data-image="assets/img/flag-2.jpg" data-imagecss="flag yu"
+                          data-title="Bangladesh">German </option>
+                  </select>
+              </div>
+              <div class="top-social">
+                  <a href="#"><i class="ti-facebook"></i></a>
+                  <a href="#"><i class="ti-twitter-alt"></i></a>
+                  <a href="#"><i class="ti-linkedin"></i></a>
+                  <a href="#"><i class="ti-pinterest"></i></a>
+              </div>
+          </div>
+          <div class="ht-right" *ngIf="!user">
+            
+            <a [routerLink]="['homes/dangnhap']" class="login-panel"><i class="fa fa-user"></i>Đăng nhập</a>
+            <div class="lan-selector">
+                <select class="language_drop" name="countries" id="countries" style="width:300px;">
+                    <option value='yt'  data-imagecss="flag yt"
+                        data-title="VietNam">VietNam</option>
+                    <option value='yu' data-image="assets/img/flag-2.jpg" data-imagecss="flag yu"
+                        data-title="Bangladesh">German </option>
+                </select>
+            </div>
+            <div class="top-social">
+                <a href="#"><i class="ti-facebook"></i></a>
+                <a href="#"><i class="ti-twitter-alt"></i></a>
+                <a href="#"><i class="ti-linkedin"></i></a>
+                <a href="#"><i class="ti-pinterest"></i></a>
+            </div>
+        </div>
+      </div>
+  </div>
+  <div class="container">
+      <div class="inner-header">
+          <div class="row">
+              <div class="col-lg-2 col-md-2">
+                  <div class="logo" style="padding: 0">
+                      <a [routerLink]="['']">
+                          <img style="height: 63px;" src="assets/img/logoHodusport.jpg" alt="">
+                      </a>
+                  </div>
+              </div>
+              <div class="col-lg-7 col-md-7">
+                  <div class="advanced-search">
+                      <button type="button" class="category-btn">Tìm kiếm      </button>
+                      <div class="input-group">
+                          <input [(ngModel)]="keyword" style="color: black;" type="text" placeholder="Bạn cần tìm gì?" >
+                          
+                          <button type="button" [ngClass]="{active: loc=='KeyWord'}" (click)="setDieuKienLoc('KeyWord')" [routerLink]="['homes/shop']"><i class="ti-search"></i></button>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-3 text-right col-md-3">
+                  <ul class="nav-right" style="padding-top: 0px;">
+                      <!-- <li class="heart-icon">
+                          <a href="#">
+                              <i class="icon_heart_alt"></i>
+                              <span>1</span>
+                          </a>
+                      </li> -->
+                      <li class="cart-icon">
+                          <a href="#">
+                              <i class="icon_bag_alt"></i>
+                              <span [(ngModel)]="soluonggiohang">{{soluonggiohang}}</span>
+                          </a>
+                          <div class="cart-hover">
+                              <div class="select-items">
+                                  <table>
+                                      <tbody *ngFor="let x of list.slice(0, 4)">
+                                          <tr >
+                                              <td class="si-pic"><img src="http://localhost:2701/{{x.anhSanPham}}" alt="" style="height: 50px;width: 150px;"></td>
+                                              <td class="si-text">
+                                                  <div class="product-selected">
+                                                      
+                                                      <h6>{{x.tenSanPham}}</h6>
+                                                      <p>X {{x.quantity}}</p>
+                                                  </div>
+                                              </td>
+                                             
+                                          </tr>
+                                          
+                                      </tbody>
+                                  </table>
+                              </div>
+                              <div class="select-total">
+                                  <span>Tổng:</span>
+                                  <h5>{{tongtien|number}}đ</h5>
+                              </div>
+                              <div class="select-button">
+                                  <a  [routerLink]="['shopping/cart']" class="primary-btn view-card">Giỏ hàng</a>
+                                  <a [routerLink]="['shopping/checkout']" class="primary-btn checkout-btn">Thanh Toán</a>
+                              </div>
+                          </div>
+                      </li>
+                      <li class="cart-price">
+                        <!-- $150.00 -->
+                    </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="nav-item">
+      <div class="container">
+          <div class="nav-depart">
+              <div class="depart-btn">
+                  <i class="ti-menu"></i>
+                  <span>Danh Mục</span>
+                  <ul class="depart-hover" *ngIf="list_danhmuc && list_danhmuc.length > 0">
+
+                    <li *ngFor="let mn of list_danhmuc" ><a [routerLink]="['/homes/shop',mn.idDanhMuc]"  ><i class="ti-eraser"></i> {{mn.tenDanhMuc}}
+                       </a>
+                        <ul *ngIf="mn.danhMucCon && mn.danhMucCon.length> 0" class="submenu">
+                            <li *ngFor="let cn of mn.danhMucCon"><a style="padding-top: 0;"[routerLink]="['/homes/shop',cn.idDanhMuc]" (click)="setDieuKienLoc('Tang')">{{cn.tenDanhMuc}}</a></li>
+                        </ul>
+                    </li>
+                      <!-- <li class="active"><a href="#">Sản phẩm mới</a></li>
+                      <li><a href="#">Quần thể thao</a></li>
+                      <li><a href="#">Áo thể thao</a></li>
+                      <li><a href="#">Giày thể thao</a></li>
+                      <li><a href="#">Dụng cụ thể thao</a></li>
+                      <li><a href="#">Sản phẩm cực HOT</a></li>
+                      <li><a href="#">BIG SALE</a></li> -->
+                  </ul>
+              </div>
+          </div>
+          <nav class="nav-menu mobile-menu">
+              <ul>
+                  <li class="active"><a [routerLink]="['']" style="text-decoration: none;">Home</a></li>
+                  <li><a [routerLink]="['homes/shop']" style="text-decoration: none;">Shop</a></li>
+                  <!-- <li><a href="#">Collection</a>
+                      <ul class="dropdown">
+                          <li><a href="#">Men's</a></li>
+                          <li><a href="#">Women's</a></li>
+                          <li><a href="#">Kid's</a></li>
+                      </ul>
+                  </li> -->
+                  <li><a href="https://forms.gle/zXYY6F8CKL3Yp3w88" style="text-decoration: none;">Liên hệ</a></li>
+                  <li><a [routerLink]="['homes/news']" style="text-decoration: none;">News</a></li>
+                  <li><a [routerLink]="['homes/vechungtoi']" style="text-decoration: none;">Về chúng tôi</a></li>
+                  <li><a href="#">Pages</a>
+                      <ul class="dropdown">
+                        
+                          <li><a [routerLink]="['shopping/cart']" style="text-decoration: none;">Giỏ hàng</a></li>
+                          <li><a [routerLink]="['shopping/checkout']" style="text-decoration: none;">Thanh toán</a></li>
+                          <li *ngIf="user" ><a [routerLink]="['homes/profilecustomer']" style="text-decoration: none;">Thông tin cá nhân</a></li>
+                          <li *ngIf="user"><a [routerLink]="['homes/donhangcuaban']" style="text-decoration: none;">Đơn hàng của bạn</a></li>
+                          <li><a [routerLink]="['homes/dangky']" style="text-decoration: none;">Đăng ký</a></li>
+                          <li *ngIf="!user"><a [routerLink]="['homes/dangnhap']"  style="text-decoration: none;">Đăng nhập</a></li>
+                          <li *ngIf="user"><a (click)="logout()"  style="text-decoration: none;cursor: pointer;">Đăng Xuất</a></li>
+                      </ul>
+                  </li>
+              </ul>
+          </nav>
+          <div id="mobile-menu-wrap"></div>
+      </div>
+  </div>
+</header>
+<!-- Header End -->

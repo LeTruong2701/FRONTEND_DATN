@@ -1,0 +1,150 @@
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-text product-more">
+          <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+          <a href="./shop.html">Shop</a>
+          <span>Check Out</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Breadcrumb Section Begin -->
+
+<!-- Shopping Cart Section Begin -->
+<section class="checkout-section spad">
+
+  
+    <div class="container">
+      <form [formGroup]="frmKhachhang" (ngSubmit)="onSubmit(frmKhachhang.value)" action="#" class="checkout-form">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="checkout-content" *ngIf="!user" style="height: 20px;">
+              <a [routerLink]="['/homes/dangnhap']" class="content-btn">Bạn đã có tài khoản? nhấn vào đây để đăng nhập</a>
+            </div>
+            <h4>Thông tin đơn hàng</h4>
+            <div class="row">
+              <div class="col-lg-12">
+                <label for="txt_hoten">Người nhận hàng<span>*</span></label>
+                <span style="color: red;" *ngIf="hoten.invalid && (hoten.dirty || hoten.touched)">
+                  <span *ngIf="hoten.errors?.['required']">
+                    Họ tên không được rỗng
+                  </span>
+                  <span *ngIf="hoten.errors?.['minlength']">
+                    Họ tên không được nhỏ hơn 3 ký tự
+                  </span>
+                  <span *ngIf="hoten.errors?.['maxlength']">
+                    Họ tên không được lớn hơn 20 ký tự
+                  </span>
+                </span>
+                <input style="width:100%;" formControlName="txt_hoten" type="text">
+              </div>
+              <!-- <div class="col-lg-6">
+                            <label for="last">Last Name<span>*</span></label>
+                            <input type="text" id="last">
+                        </div> -->
+              <div class="col-lg-12">
+                <label for="txt_sdt">Số điện thoại liên lạc<span>*</span>
+
+                  <span  style="color: red;" *ngIf="sodienthoai.invalid && (sodienthoai.dirty || sodienthoai.touched)">
+                    <span *ngIf="sodienthoai.errors?.['required']">Số điện thoại không được rỗng</span>
+                    <span *ngIf="sodienthoai.errors?.['pattern']">Không đúng định dạng số điện thoại</span>
+                  </span>
+                </label>
+                <input formControlName="txt_sdt" type="text" >
+              </div>
+
+              <!-- <div class="col-lg-12">
+                <label for="txt_email">Email
+                  <span *ngIf="email.invalid && (email.dirty || email.touched)">
+                    <span *ngIf="email.errors?.['email']">Không đúng định dạng của email</span>
+                </span> 
+                </label>
+                <input formControlName="txt_email" type="text" >
+              </div> -->
+
+
+              <div class="col-lg-12">
+                <label for="txt_diachigiaohang">Địa chỉ giao hàng<span>*</span>
+                  <span  style="color: red;" *ngIf="diachigiaohang.invalid && (diachigiaohang.dirty || diachigiaohang.touched)">
+                    <span *ngIf="diachigiaohang.errors?.['required']">Địa chỉ không được rỗng</span>
+                    <span *ngIf="diachigiaohang.errors?.['minlength']">Địa chỉ không được dưới 10 ký tự</span>
+                </span> 
+                </label><br>
+                <textarea style="width:100%;border: 2px solid #ebebeb;" formControlName="txt_diachigiaohang" cols="62" rows="2"  ></textarea>
+              </div>
+
+
+              <div class="col-lg-12">
+                <label for="txt_ghichu">Ghi chú</label><br>
+                <textarea style="width:100%;border: 2px solid #ebebeb;" formControlName="txt_ghichu" id="txt_ghichu" cols="62" rows="2"  ></textarea>
+              </div>
+
+              <div class="col-lg-12">
+                <label for="txt_hoten">Mã khuyến mãi</label>
+                <div style="display: flex;">
+
+                  <input style="width: 60%;" [(ngModel)]="makm"  formControlName="txt_makhuyenmai" type="text" placeholder="Mã khuyến mãi">
+                  <div style=" margin-left: auto; height: 40px;" (click)="ThemMaKhuyenMai()"  class="btn btn-primary" >Thêm Mã</div>
+                </div>
+                
+              </div>
+
+             
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <!-- <div class="checkout-content">
+              <input type="text" placeholder="Enter Your Coupon Code">
+            </div> -->
+            <div class="checkout-content" *ngIf="!user" style="height: 20px;">
+              <a [routerLink]="['/homes/dangky']" class="content-btn">Đăng ký tài khoản</a>
+            </div>
+            <div class="place-order">
+              <h4>Đơn Hàng Của Bạn</h4>
+              <div class="order-total">
+                <ul class="order-table">
+                  <li>Sản phẩm<span>Tổng tiền</span></li>
+                  <div *ngFor="let it of list_items"> 
+
+                    <li class="fw-normal">{{it.tenSanPham}} x {{it.quantity}} <span>{{it.quantity * it.giaBan|number}}đ</span></li>
+                  </div>
+                  
+                  <!-- <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
+                  <li class="fw-normal">Combination x 1 <span>$120.00</span></li> -->
+                  <!-- <li class="fw-normal">Subtotal <span>$240.00</span></li> -->
+                  <li class="total">Tổng tiền(Chưa áp mã khuyến mại) <span>{{tongtien.toLocaleString()}} VNĐ</span></li>
+                  <li class="total-price">Tổng tiền thanh toán <span>{{tongtienphaithanhtoan.toLocaleString()}} VNĐ</span></li>
+                  <li *ngIf="flag">Mã khuyến mãi:{{makm}}</li>
+                </ul>
+                <div class="payment-check">
+                  <h4>Phương thức thanh toán</h4>
+                  <div class="pc-item" style="margin-bottom: 10px;">
+                    <label for="pc-check">
+                      Nhận hàng thanh toán
+                      <input  formControlName="txt_trangthaithanhtoan" (change)="trangThaiThanhToan($event)" type="checkbox" id="pc-check">
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  
+                  <div>
+                    <div class="btn btn-primary" (click)="thanhtoanmomo(frmKhachhang.value)">Thanh toán momo</div>
+                  </div>
+                </div>
+                <div class="order-btn">
+                  <!-- type="submit" -->
+                  <button  class="btn btn-primary" type="submit">Đặt hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  
+</section>
+<!-- Shopping Cart Section End -->
+

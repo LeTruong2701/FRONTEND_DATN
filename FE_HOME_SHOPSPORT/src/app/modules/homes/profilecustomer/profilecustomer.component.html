@@ -1,0 +1,235 @@
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="breadcrumb-text product-more">
+                  <a href="./home.html"><i class="fa fa-home"></i> Home</a>
+                  <a href="./shop.html">Thông tin cá nhân</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- Breadcrumb Section Begin -->
+<!-- row -->
+<section>
+  <div class="container">
+    
+      <div class="row">
+        <div class="col-lg-4 col-xl-3">
+    
+    
+          <div class="card">
+            <div class="card-body">
+              <div class="media align-items-center mb-4" style="display: flex; justify-content: center; align-items: center;">
+                <img class="mr-3"  src="http://localhost:2701/{{anhdaidien}}" width="80" height="80" alt="">
+              </div>
+    
+              <div class="row md-5" >
+                <div class="media-body" >
+                  <h3 class="mb-0" style="text-align: center;" >{{hoTen}}</h3>
+                  <p class="text-muted mb-0" style="text-align: center;">{{user_name}}</p>
+                </div>
+    
+              </div>
+              
+              <div class="row mb-5">
+                  
+                  <div class="col-12 text-center">
+                    <input style="display: none;" id="avatar-input" title="Chọn ảnh" (change)="upload($event)"
+                        accept=".jpg,.png,.jpeg,.gif,.bmp,.tif,.tiff" type="file" class="file-styled">
+                    <label for="avatar-input" style="background-color: #e7ab3c;color: white;border-color: #e7ab3c;" class="btn btn-danger px-5">Đổi ảnh đại diện</label>
+                    <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
+                  </div>
+              </div>
+    
+              
+          </div>
+          </div>
+        </div>
+    
+        <div class="col-lg-8 col-xl-9">
+          <div class="card">
+            <div class="card-body">
+              <div class="row" style="justify-content: space-between;padding: 0px 16px;">
+                <h4 class="card-title" style="margin-top: 10px;">Thông tin của bạn</h4>
+                <button (click)="modalDoiMatKhau()"  type="submit" class="btn btn-info">Đổi mật khẩu</button>
+              </div>
+              
+              <div class="basic-form">
+                  <form [formGroup]="frmProfile" (ngSubmit)="OnSubmit(frmProfile.value)">
+                      <div class="form-row">
+                          
+                          <div class="form-group col-md-6">
+                              <label>Tài khoản</label>
+                              <input formControlName="txt_username" type="text" class="form-control" placeholder="Tài khoản" readonly>
+                          </div>
+    
+                          <div class="form-group col-md-6">
+                            <label>Email</label>
+                            <input formControlName="txt_email" type="email" class="form-control" placeholder="Email">
+                        </div>
+                      </div>
+                      <div class="form-row">
+    
+                        <div class="form-group col-md-6">
+                          <label>Họ tên</label>
+                          <input formControlName="txt_hoten" type="text" class="form-control" placeholder="Họ tên">
+                        </div>
+    
+                        <div class="form-group col-md-6">
+                          <label>Giới Tính</label>
+                          <select formControlName="txt_gioitinh" [(ngModel)]="gt"  class="form-control" (change)="changeGioiTinh($event)">
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                          </select>
+                        </div>
+                      </div>
+    
+                      <div class="form-row">
+    
+                        <div class="form-group col-md-6">
+                          <label>Ngày sinh</label>
+                          <input formControlName="txt_ngaysinh" type="date" class="form-control" >
+                          <div *ngIf="ngaysinh.invalid && (ngaysinh.dirty || ngaysinh.touched)">
+                            <div *ngIf="ngaysinh.errors?.['required']" style="color:red ;">Ngày sinh không được rỗng
+                            </div>
+                          </div>
+                        </div>
+    
+                        <div class="form-group col-md-6">
+                          <label>Số điện thoại</label>
+                          <input formControlName="txt_sdt" type="text" class="form-control" placeholder="Số điện thoại">
+                        </div>
+                      </div>
+                      <div class="form-row">
+    
+                        <div class="form-group col-md-12">
+                          <label>Địa chỉ</label>
+                          <input formControlName="txt_diachi" type="text" class="form-control" placeholder="Địa chỉ">
+                        </div>
+    
+                      </div>
+
+                      <div class="form-row">
+    
+                        <div class="form-group col-md-12">
+                          <label>Địa chỉ Giao Hàng</label>
+                          <input formControlName="txt_diachigiaohang" type="text" class="form-control" placeholder="Địa chỉ giao hàng">
+                        </div>
+    
+                      </div>
+    
+                      <div class="row">
+    
+                        <button type="submit" class="btn btn" style="background-color: #e7ab3c;color: white;">Lưu Thông Tin</button>
+                        
+                      </div>
+                      
+                  </form>
+              </div>
+          </div>
+    
+          </div>
+        </div>
+      </div>
+    
+  </div>
+
+<!-- #/ container -->
+</section>
+
+<!-- Large modal -->
+<div *ngIf="hienThiModal" class="modal fade" id="hienthiModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title">Đổi mật khẩu</h5>
+			</div>
+			<hr>
+			<form *ngIf="okForm" [formGroup]="frmDoiMatKhau" (ngSubmit)="SubmitDoiMatKhau(frmDoiMatKhau.value)"
+				class="form-horizontal">
+				<div class="modal-body" style="padding-left: 50px !important; padding-right:50px !important;">
+					
+
+          <div class="form-group">
+						<label class="col-lg-3 control-label">Tên tài khoản<span style="color:red ;">*</span></label>
+						<div class="col-lg-9">
+							<input formControlName="txt_username" type="text" class="form-control" readonly>
+						</div>
+
+
+					</div>
+
+
+          <div class="form-group">
+						<label class="col-lg-3 control-label">Mật khẩu cũ<span style="color:red ;">*</span></label>
+						<div class="col-lg-9">
+							<input style="position: relative;" id="ip1" formControlName="txt_matkhaucu" type="password" class="form-control" placeholder="Mật khẩu cũ">
+              <button style="position: absolute;top: 0;right: 15px;height: 44px;border: none;" id="icon1" class="btn btn-outline-secondary" type="button" (click)="togglePassword('ip1', 'icon1')">
+                <i class="ti-eye"></i>
+              </button>
+						</div>
+
+            <div class="col-lg-9" *ngIf="(matkhaucu.dirty || matkhaucu.touched)" style="color:red ;">
+                
+              <div *ngIf="matkhaucu.errors?.['required']" style="color:red ;">Không được
+                để trống
+              </div>
+            </div>
+
+					</div>
+
+          <div class="form-group">
+						<label class="col-lg-3 control-label">Mật khẩu mới<span style="color:red ;">*</span></label>
+						<div class="col-lg-9">
+							<input style="position: relative;" id="ip2" formControlName="txt_matkhaumoi" type="password" class="form-control" placeholder="Mật khẩu mới">
+              <button style="position: absolute;top: 0;right: 15px;height: 44px;border: none;" id="icon2" class="btn btn-outline-secondary" type="button" (click)="togglePassword('ip2', 'icon2')">
+                <i class="ti-eye"></i>
+              </button>
+						</div>
+            <div class="col-lg-9" *ngIf="(matkhaumoi.dirty || matkhaumoi.touched)" style="color:red ;">
+              <div *ngIf="frmDoiMatKhau.errors?.['passwordmatcherror1']" style="color: red;">
+                Mật khẩu mới không được giống mật khẩu cũ
+              </div>
+              <div *ngIf="matkhaumoi.errors?.['required']" style="color:red ;">Không được
+                để trống
+              </div>
+            </div>
+					</div>
+          <div class="form-group">
+						<label class="col-lg-12 control-label">Nhập lại mật khẩu mới<span style="color:red ;">*</span></label>
+						<div class="col-lg-9">
+							<input style="position: relative;" id="ip3" formControlName="txt_nhaplaimatkhaumoi" type="password" class="form-control" placeholder="Nhập lại mật khẩu">
+              <button style="position: absolute;top: 0;right: 15px;height: 44px;border: none;" id="icon3" class="btn btn-outline-secondary" type="button" (click)="togglePassword('ip3', 'icon3')">
+                <i class="ti-eye"></i>
+              </button>
+						</div>
+            <div class="col-lg-9" *ngIf="(nhaplaimatkhaumoi.dirty || nhaplaimatkhaumoi.touched)" style="color:red ;">
+              <div *ngIf="frmDoiMatKhau.errors?.['passwordmatcherror2']" style="color: red;">
+                Mật khẩu mới nhập phải giống mật khẩu mới
+              </div>
+              <div *ngIf="nhaplaimatkhaumoi.errors?.['required']" style="color:red ;">Không được
+                để trống
+              </div>
+            </div>
+					</div>
+          
+
+
+				</div>
+				<hr>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" (click)="dongModal()">Đóng</button>
+					<button type="submit" class="btn btn-primary" [disabled]="frmDoiMatKhau.invalid">Lưu lại</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- /large modal -->
+
+
+
